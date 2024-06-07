@@ -1,0 +1,39 @@
+# Couldn't automatically generate a config from your source code.
+# This is a generic template to serve as a base for your custom config
+# See: https://circleci.com/docs/configuration-reference
+version: 2.1
+
+default-job: &default-job
+  docker:
+    - image: cimg/base:stable
+
+commands:
+  install_js:
+    steps:
+      - run:
+          name: Install js dependencies
+          command: pnpm install
+      - run:
+          name: Install Vercel CLI
+          command: pnpm install --global vercel@latest
+
+jobs:
+  checkout:
+    <<: *default-job
+    steps:
+      - checkout
+      - install_js
+
+  test_lint:
+    <<: *default-job
+    steps:
+      - checkout
+      - run:
+          name: Prettier
+          command: pnpm lint
+
+workflows:
+  version: 2
+  react-next:
+    jobs:
+      - test_lint
