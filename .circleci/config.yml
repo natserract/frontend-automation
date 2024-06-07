@@ -59,6 +59,16 @@ jobs:
           command: pnpm typescript
           environment:
             NODE_OPTIONS: --max-old-space-size=3072
+  test_builds:
+    <<: *default-job
+    steps:
+      - checkout
+      - install_packages
+      - run:
+          name: Prepare danger on PRs
+          command: pnpm danger ci
+          environment:
+            DANGER_COMMAND: checkSecretFiles
 
 workflows:
   version: 2
@@ -70,5 +80,8 @@ workflows:
           requires:
             - checkout
       - test_types:
+          requires:
+            - checkout
+      - test_builds:
           requires:
             - checkout
