@@ -1,0 +1,55 @@
+# Couldn't automatically generate a config from your source code.
+# This is a generic template to serve as a base for your custom config
+# See: https://circleci.com/docs/configuration-reference
+version: 2.1
+
+default-job: &default-job
+  docker:
+    - image: cimg/node:lts
+
+commands:
+  install_packages:
+    steps:
+      - restore_cache:
+          name: Restore pnpm Package Cache
+          keys:
+            - pnpm-packages-{{ checksum "pnpm-lock.yaml" }}
+      - run:
+          name: Install pnpm package manager
+          command: |
+            corepack enable
+            corepack prepare pnpm@latest-9 --activate
+            pnpm config set store-dir .pnpm-store
+      - run:
+          name: Install Dependencies
+          command: |
+            pnpm install
+      - save_cache:
+          name: Save pnpm Package Cache
+          key: pnpm-packages-{{ checksum "pnpm-lock.yaml" }}
+          paths:
+            - .pnpm-store
+      - run:
+          name: Install Vercel CLI
+          command: pnpm install --global vercel@latest
+
+jobs:
+  checkout:
+    <<: *default-job
+    steps:
+      - checkout
+      - install_js
+
+  test_lint:
+    <<: *default-job
+    steps:
+      - checkout
+      - run:
+          name: Prettier
+          command: pnpm lint
+
+workflows:
+  version: 2
+  react-next:
+    jobs:
+      - test_lint
