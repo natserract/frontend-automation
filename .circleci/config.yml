@@ -64,4 +64,11 @@ workflows:
   version: 2
   react-next:
     jobs:
+      - checkout
       - test_lint
+      - test_static:
+          requires:
+            - checkout
+      - test_types:
+          requires:
+            - checkout
