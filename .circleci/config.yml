@@ -11,11 +11,19 @@ commands:
   install_packages:
     steps:
       - run:
+          name: Uninstall pnpm
+          command: npm uninstall -g pnpm
+      - run:
           name: Install pnpm
           command: npm i -g pnpm@8.15.8
           environment:
             # CircleCI uses interactive terminals (TTY) that crash Turborepo's terminal UI.
             TURBO_UI: "false"
+      - run:
+          name: View install environment
+          command: |
+            node --version
+            pnpm --version
       # look for existing cache and restore if found
       - restore_cache:
           key: npm-dependencies-{{ checksum "pnpm-lock.yaml" }}
