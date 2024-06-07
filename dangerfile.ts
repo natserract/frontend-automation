@@ -7,7 +7,7 @@ const maxCommitMessageLength = 72;
 
 function checkGitCommitMessage() {
   const commitMessage = danger.git.commits[0]?.message;
-  if (!commitMessage) return true;
+  if (!commitMessage) return false;
 
   // Check if the commit message follows the Conventional Commits specification
   const conventionalCommitsRegex =
@@ -27,7 +27,7 @@ function checkGitCommitMessage() {
 async function run() {
   const isCommitMessageValid = checkGitCommitMessage();
 
-  if (isCommitMessageValid) {
+  if (!isCommitMessageValid) {
     const message = `
     ## 🚀 Improve Commit Message
 
