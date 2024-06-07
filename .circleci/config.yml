@@ -5,12 +5,17 @@ version: 2.1
 
 default-job: &default-job
   docker:
-    - image: cimg/base:stable
-    - image: cimg/node:lts-browsers
+    - image: cimg/node:lts
 
 commands:
-  install_js:
+  install_packages:
     steps:
+      - run:
+          name: Install pnpm
+          command: npm i -g pnpm
+          environment:
+            # CircleCI uses interactive terminals (TTY) that crash Turborepo's terminal UI.
+            TURBO_UI: "false"
       # look for existing cache and restore if found
       - restore_cache:
           key: npm-dependencies-{{ checksum "pnpm-lock.yaml" }}
