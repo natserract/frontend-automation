@@ -1,50 +1,46 @@
 // danger has to be the first thing required!
 import { danger, markdown } from "danger";
-import path from "node:path";
 
 const dangerCommand = process.env.DANGER_COMMAND;
 
-function checkSecretFiles() {
-  const changedFiles = danger.git.modified_files.concat(
-    danger.git.created_files,
-  );
-  const sensitiveFileExtensions = [".pem", ".key", ".crt", ".pfx"];
+const maxCommitMessageLength = 72;
 
-  const sensitiveFilesIncluded = changedFiles.some((file) => {
-    const fileExtension = path.extname(file).toLowerCase();
-    return sensitiveFileExtensions.includes(fileExtension);
-  });
+function checkGitCommitMessage() {
+  const commitMessage = danger.git.commits[0]?.message;
+  if (!commitMessage) return false;
 
-  const message = `
-    ## 🔒 Sensitive Files Detected
-    Please do not include private keys, certificates, or other sensitive files in your pull request. These should be managed securely outside of the codebase.
-    The following sensitive files were detected in your changes:
-    `;
-
-  if (sensitiveFilesIncluded) {
-    const sensitiveFiles = danger.git.modified_files
-      .concat(danger.git.created_files)
-      .filter((file) => {
-        const fileExtension = path.extname(file).toLowerCase();
-        return sensitiveFileExtensions.includes(fileExtension);
-      });
-
-    const formattedFiles = sensitiveFiles
-      .map((file) => `- \`${file}\``)
-      .join("\n");
-
-    markdown(`${message}
-   ${formattedFiles}
-   `);
-  } else {
-    markdown(`${message}
-   ${"✓"}
-   `);
+  // Check if the commit message follows the Conventional Commits specification
+  const conventionalCommitsRegex =
+    /^(feat|fix|docs|style|refactor|test|chore)(\(.+\))?!?: .+/;
+  if (!conventionalCommitsRegex.test(commitMessage)) {
+    return false;
   }
+
+  // Check if the commit message is too long
+  if (commitMessage.length > maxCommitMessageLength) {
+    return false;
+  }
+
+  return true;
 }
 
 async function run() {
-  checkSecretFiles();
+  const isCommitMessageValid = checkGitCommitMessage();
+
+  if (!isCommitMessageValid) {
+    const message = `
+    ## 🚀 Improve Commit Message
+
+    Your Git commit message could be improved to follow best practices:
+
+    - Use the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) specification
+    - Keep the commit message under ${maxCommitMessageLength} characters
+
+    Please update your commit message to match these guidelines.
+    `;
+
+    markdown(message);
+  }
 }
 
 run().catch((error) => {
