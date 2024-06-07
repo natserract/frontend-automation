@@ -71,41 +71,19 @@ jobs:
             DANGER_COMMAND: checkGitCommitMessage
   test_regressions:
     <<: *default-job
-    docker:
-      - image: mcr.microsoft.com/playwright:v1.40.0-jammy
-    working_directory: /tmp/pw-browsers
     steps:
       - checkout
-      - run:
-          name: Install pnpm package manager
-          command: |
-            corepack enable
-            corepack prepare pnpm@latest-8 --activate
-      - run:
-          name: View install environment
-          command: |
-            node --version
-            pnpm --version
-      - run:
-          name: Install Dependencies
-          command: |
-            pnpm install
+      - install_packages
       - run: npx playwright install
       - run: npx playwright install chrome
       - run:
           name: Run test
           command: pnpm test:regressions --project=chromium
       - run:
-          name: "echo an env var that is part of our project"
-          command: |
-            echo $ARGOS_TOKEN
-      - run:
           name: Upload screenshots to Argos CI
           command: pnpm test:argos
           environment:
             ARGOS_TOKEN: $ARGOS_TOKEN
-      - store_test_results:
-          path: results.xml
 
 workflows:
   version: 2
