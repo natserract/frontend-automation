@@ -6,6 +6,7 @@
     "build": "turbo build",
     "dev": "turbo dev",
     "lint": "turbo lint",
+    "typescript": "turbo run typescript -- --noEmit",
     "prettier": "pretty-quick --ignore-path .eslintignore --branch next",
     "prettier:all": "prettier --write . --ignore-path .eslintignore",
     "prepare": "husky"
