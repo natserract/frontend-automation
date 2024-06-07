@@ -6,18 +6,21 @@ version: 2.1
 default-job: &default-job
   docker:
     - image: cimg/base:stable
+    - image: cimg/node:lts-browsers
 
 commands:
   install_js:
     steps:
-      - run:
-          name: Install pnpm package manager
-          command: |
-            corepack enable
-            corepack prepare pnpm@latest-8 --activate
+      # look for existing cache and restore if found
+      - restore_cache:
+          key: npm-dependencies-{{ checksum "pnpm-lock.yaml" }}
       - run:
           name: Install js dependencies
-          command: pnpm install
+          command: pnpm install --frozen-lockfile
+      - save_cache:
+          key: npm-dependencies-{{ checksum "pnpm-lock.yaml" }}
+          paths:
+            - node_modules
       - run:
           name: Install Vercel CLI
           command: pnpm install --global vercel@latest
