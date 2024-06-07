@@ -1,0 +1,51 @@
+# Couldn't automatically generate a config from your source code.
+# This is a generic template to serve as a base for your custom config
+# See: https://circleci.com/docs/configuration-reference
+version: 2.1
+
+default-job: &default-job
+  working_directory: /tmp/natserract
+  docker:
+    - image: cimg/node:18.20
+
+commands:
+  install_packages:
+    steps:
+      - run:
+          name: Install pnpm package manager
+          command: |
+            corepack enable --install-directory ~/bin
+            corepack prepare pnpm@latest-8 --activate
+      - run:
+          name: View install environment
+          command: |
+            node --version
+            pnpm --version
+      - run:
+          name: Install Dependencies
+          command: |
+            pnpm install
+
+jobs:
+  checkout:
+    <<: *default-job
+    steps:
+      - checkout
+      - install_packages
+
+  test_lint:
+    <<: *default-job
+    steps:
+      - checkout
+      - install_packages
+      - run:
+          name: Prettier
+          command: pnpm lint
+          environment:
+            TURBO_UI: "false"
+
+workflows:
+  version: 2
+  react-next:
+    jobs:
+      - test_lint
