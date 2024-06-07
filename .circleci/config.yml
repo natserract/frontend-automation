@@ -68,7 +68,7 @@ jobs:
           name: Prepare danger on PRs
           command: pnpm danger ci
           environment:
-            DANGER_COMMAND: checkSecretFiles
+            DANGER_COMMAND: checkGitCommitMessage
 
 workflows:
   version: 2
