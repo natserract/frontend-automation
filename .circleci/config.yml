@@ -12,7 +12,7 @@ commands:
     steps:
       - run:
           name: Install pnpm
-          command: npm i -g pnpm
+          command: npm i -g pnpm@8.15.8
           environment:
             # CircleCI uses interactive terminals (TTY) that crash Turborepo's terminal UI.
             TURBO_UI: "false"
