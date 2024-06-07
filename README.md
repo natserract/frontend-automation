@@ -3,7 +3,7 @@
 This is an official starter Turborepo.
 
 ## What's inside:
-- circle ci
+- circle ci https://circleci.com/
 - renovate https://www.mend.io/renovate/
-- pnpm
+- pnpm https://pnpm.io/
 - dangerjs https://github.com/danger/danger-js
