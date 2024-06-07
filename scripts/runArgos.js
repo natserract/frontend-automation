@@ -3,8 +3,8 @@ const fse = require("fs-extra");
 const lodashChunk = require("lodash.chunk");
 const { upload } = require("@argos-ci/core");
 
-const screenshotsBase = "test/regressions/screenshots/chrome";
-const screenshotsTmp = "test/regressions/screenshots/argos";
+const screenshotsBase = "tests/regressions/screenshots/chrome";
+const screenshotsTmp = "tests/regressions/screenshots/argos";
 const BATCH_SIZE = 200;
 
 async function run() {

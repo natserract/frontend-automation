@@ -25,16 +25,6 @@ commands:
           name: Install Dependencies
           command: |
             pnpm install
-      - run:
-          name: Install playwright browsers
-          command: pnpm playwright install --with-deps
-      - save_cache:
-          name: Save playwright cache
-          key: v6-playwright-{{ arch }}-{{ checksum "/tmp/playwright_info.json" }}
-          paths:
-            # Keep path in sync with "PLAYWRIGHT_BROWSERS_PATH"
-            # Can't use environment variables for `save_cache` paths (tested in https://app.circleci.com/pipelines/github/mui/material-ui/37813/workflows/5b1e207f-ac8b-44e7-9ba4-d0f9a01f5c55/jobs/223370)
-            - /tmp/pw-browsers
 
 jobs:
   checkout:
@@ -82,17 +72,21 @@ jobs:
   test_regressions:
     <<: *default-job
     docker:
-      - image: mcr.microsoft.com/playwright:v1.44.1-focal
-        environment:
-          NODE_ENV: development # Needed if playwright is in `devDependencies`
+      - image: mcr.microsoft.com/playwright:v1.40.0-jammy
+    working_directory: /tmp/pw-browsers
     steps:
       - checkout
       - install_packages
+      - run: npm i -D @playwright/test
+      - run: npx playwright install
+      - run: npx playwright install chrome
       - run:
-          name: Upload screenshots to Argos CI
-          command: pnpm test:argos
+          name: Run test
+          command: PLAYWRIGHT_JUNIT_OUTPUT_NAME=results.xml npx playwright test --reporter=junit --project=chromium
           environment:
-            CI: "true"
+            ARGOS_TOKEN: $ARGOS_TOKEN
+      - store_test_results:
+          path: results.xml
 
 workflows:
   version: 2

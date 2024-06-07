@@ -9,6 +9,7 @@
     "typescript": "turbo run typescript -- --noEmit",
     "prettier": "pretty-quick --ignore-path .eslintignore --branch next",
     "prettier:all": "prettier --write . --ignore-path .eslintignore",
+    "test:regressions": "playwright test",
     "test:argos": "node ./scripts/runArgos.js",
     "prepare": "husky"
   },
