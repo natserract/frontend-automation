@@ -11,11 +11,10 @@ commands:
   install_packages:
     steps:
       - run:
-          name: Uninstall pnpm
-          command: npm uninstall -g pnpm
-      - run:
-          name: Install pnpm
-          command: npm i -g pnpm@8.15.8
+          name: Install pnpm package manager
+          command: |
+            corepack enable
+            corepack prepare pnpm@latest-8 --activate
           environment:
             # CircleCI uses interactive terminals (TTY) that crash Turborepo's terminal UI.
             TURBO_UI: "false"
@@ -24,16 +23,9 @@ commands:
           command: |
             node --version
             pnpm --version
-      # look for existing cache and restore if found
-      - restore_cache:
-          key: npm-dependencies-{{ checksum "pnpm-lock.yaml" }}
       - run:
           name: Install js dependencies
-          command: pnpm install --frozen-lockfile
-      - save_cache:
-          key: npm-dependencies-{{ checksum "pnpm-lock.yaml" }}
-          paths:
-            - node_modules
+          command: pnpm install
       - run:
           name: Install Vercel CLI
           command: pnpm install --global vercel@latest
