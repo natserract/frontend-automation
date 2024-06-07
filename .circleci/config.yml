@@ -10,22 +10,25 @@ default-job: &default-job
 commands:
   install_packages:
     steps:
+      - restore_cache:
+          name: Restore pnpm Package Cache
+          keys:
+            - pnpm-packages-{{ checksum "pnpm-lock.yaml" }}
       - run:
           name: Install pnpm package manager
           command: |
             corepack enable
-            corepack prepare pnpm@latest-8 --activate
-          environment:
-            # CircleCI uses interactive terminals (TTY) that crash Turborepo's terminal UI.
-            TURBO_UI: "false"
+            corepack prepare pnpm@latest-9 --activate
+            pnpm config set store-dir .pnpm-store
       - run:
-          name: View install environment
+          name: Install Dependencies
           command: |
-            node --version
-            pnpm --version
-      - run:
-          name: Install js dependencies
-          command: pnpm install
+            pnpm install
+      - save_cache:
+          name: Save pnpm Package Cache
+          key: pnpm-packages-{{ checksum "pnpm-lock.yaml" }}
+          paths:
+            - .pnpm-store
       - run:
           name: Install Vercel CLI
           command: pnpm install --global vercel@latest
