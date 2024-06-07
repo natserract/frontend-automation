@@ -69,6 +69,20 @@ jobs:
           command: pnpm danger ci
           environment:
             DANGER_COMMAND: checkGitCommitMessage
+  test_regressions:
+    <<: *default-job
+    docker:
+      - image: mcr.microsoft.com/playwright:v1.44.1-focal
+        environment:
+          NODE_ENV: development # Needed if playwright is in `devDependencies`
+    steps:
+      - checkout
+      - install_packages
+      - run:
+          name: Upload screenshots to Argos CI
+          command: pnpm test:argos
+          environment:
+            CI: "true"
 
 workflows:
   version: 2
@@ -83,5 +97,8 @@ workflows:
           requires:
             - checkout
       - test_builds:
+          requires:
+            - checkout
+      - test_regressions:
           requires:
             - checkout

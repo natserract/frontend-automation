@@ -9,13 +9,23 @@
     "typescript": "turbo run typescript -- --noEmit",
     "prettier": "pretty-quick --ignore-path .eslintignore --branch next",
     "prettier:all": "prettier --write . --ignore-path .eslintignore",
+    "test:argos": "node ./scripts/runArgos.js",
     "prepare": "husky"
   },
   "devDependencies": {
+    "@argos-ci/core": "^2.2.0",
+    "@argos-ci/playwright": "^3.0.4",
+    "@playwright/test": "^1.44.1",
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
+    "@types/node": "^20.14.2",
     "danger": "^12.3.0",
+    "dotenv": "^16.4.5",
+    "fast-glob": "^3.3.2",
+    "fs-extra": "^11.2.0",
     "husky": "^9.0.11",
+    "lodash.chunk": "^4.2.0",
+    "playwright": "^1.44.1",
     "prettier": "^3.2.5",
     "pretty-quick": "^4.0.0",
     "turbo": "latest"
