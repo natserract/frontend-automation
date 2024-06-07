@@ -90,7 +90,7 @@ jobs:
           name: Install Dependencies
           command: |
             pnpm install
-      - run: npm i -D @playwright/test
+      - run: pnpm add -D @playwright/test -w
       - run: npx playwright install
       - run: npx playwright install chrome
       - run:
