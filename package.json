@@ -1,5 +1,5 @@
 {
-  "name": "my-turborepo",
+  "name": "frontend-automation",
   "private": true,
   "scripts": {
     "preinstall": "npx only-allow pnpm",
