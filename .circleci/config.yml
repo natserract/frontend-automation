@@ -76,7 +76,20 @@ jobs:
     working_directory: /tmp/pw-browsers
     steps:
       - checkout
-      - install_packages
+      - run:
+          name: Install pnpm package manager
+          command: |
+            corepack enable
+            corepack prepare pnpm@latest-8 --activate
+      - run:
+          name: View install environment
+          command: |
+            node --version
+            pnpm --version
+      - run:
+          name: Install Dependencies
+          command: |
+            pnpm install
       - run: npm i -D @playwright/test
       - run: npx playwright install
       - run: npx playwright install chrome
@@ -85,6 +98,9 @@ jobs:
           command: PLAYWRIGHT_JUNIT_OUTPUT_NAME=results.xml npx playwright test --reporter=junit --project=chromium
           environment:
             ARGOS_TOKEN: $ARGOS_TOKEN
+      - run:
+          name: Upload screenshots to Argos CI
+          command: pnpm test:argos
       - store_test_results:
           path: results.xml
 
