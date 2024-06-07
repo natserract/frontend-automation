@@ -38,7 +38,7 @@ function checkSecretFiles() {
    `);
   } else {
     markdown(`${message}
-   ${"-"}
+   ${"✓"}
    `);
   }
 }
