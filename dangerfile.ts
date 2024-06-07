@@ -44,13 +44,7 @@ function checkSecretFiles() {
 }
 
 async function run() {
-  switch (dangerCommand) {
-    case "checkSecretFiles":
-      checkSecretFiles();
-      break;
-    default:
-      throw new TypeError(`Unrecognized danger command '${dangerCommand}'`);
-  }
+  checkSecretFiles();
 }
 
 run().catch((error) => {
