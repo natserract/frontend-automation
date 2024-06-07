@@ -39,13 +39,49 @@ jobs:
       - checkout
       - install_packages
       - run:
-          name: Prettier
+          name: Lint
           command: pnpm lint
+  test_static:
+    <<: *default-job
+    steps:
+      - checkout
+      - install_packages
+      - run:
+          name: Prettier check
+          command: pnpm prettier --check
+  test_types:
+    <<: *default-job
+    steps:
+      - checkout
+      - install_packages
+      - run:
+          name: Tests TypeScript definitions
+          command: pnpm typescript
           environment:
-            TURBO_UI: "false"
+            NODE_OPTIONS: --max-old-space-size=3072
+  test_builds:
+    <<: *default-job
+    steps:
+      - checkout
+      - install_packages
+      - run:
+          name: Prepare danger on PRs
+          command: pnpm danger ci
+          environment:
+            DANGER_COMMAND: checkSecretFiles
 
 workflows:
   version: 2
   react-next:
     jobs:
+      - checkout
       - test_lint
+      - test_static:
+          requires:
+            - checkout
+      - test_types:
+          requires:
+            - checkout
+      - test_builds:
+          requires:
+            - checkout
