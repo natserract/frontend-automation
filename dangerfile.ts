@@ -1,6 +1,6 @@
 // danger has to be the first thing required!
 import { danger, markdown } from "danger";
-import path from "node:path";
+import path from "path";
 
 const dangerCommand = process.env.DANGER_COMMAND;
 
@@ -11,8 +11,12 @@ function checkSecretFiles() {
   const sensitiveFileExtensions = [".pem", ".key", ".crt", ".pfx"];
 
   const sensitiveFilesIncluded = changedFiles.some((file) => {
-    const fileExtension = path.extname(file).toLowerCase();
-    return sensitiveFileExtensions.includes(fileExtension);
+    if (file) {
+      const fileExtension = path.extname(file).toLowerCase();
+      return sensitiveFileExtensions.includes(fileExtension);
+    }
+
+    return false;
   });
 
   const message = `
@@ -25,8 +29,12 @@ function checkSecretFiles() {
     const sensitiveFiles = danger.git.modified_files
       .concat(danger.git.created_files)
       .filter((file) => {
-        const fileExtension = path.extname(file).toLowerCase();
-        return sensitiveFileExtensions.includes(fileExtension);
+        if (file) {
+          const fileExtension = path.extname(file).toLowerCase();
+          return sensitiveFileExtensions.includes(fileExtension);
+        }
+
+        return false;
       });
 
     const formattedFiles = sensitiveFiles
