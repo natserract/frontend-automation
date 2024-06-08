@@ -1,6 +1,11 @@
 # See: https://circleci.com/docs/configuration-reference
 version: 2.1
 
+general:
+  branches:
+    ignore:
+      - /^(?!main).*$/
+
 default-job: &default-job
   working_directory: /tmp/natserract
   docker:
