@@ -94,7 +94,7 @@ jobs:
         uses: actions/cache@v3
         id: playwright-cache
         with:
-          path: /tmp/pw-browsers
+          path: "~/.cache/ms-playwright"
           key: "${{ runner.os }}-playwright-${{ env.PLAYWRIGHT_VERSION }}"
           restore-keys: |
             ${{ runner.os }}-playwright-
@@ -102,25 +102,17 @@ jobs:
       # Install browser binaries & OS dependencies if cache missed
       - name: Install playwright browsers
         if: steps.playwright-cache.outputs.cache-hit != 'true'
-        run: npx playwright install --with-deps chromium
-        working-directory: /tmp/pw-browsers
+        run: npx playwright install --with-deps
+        working-directory: ./tests
 
       # Install only the OS dependencies if cache hit
       - name: 🏗 Install Playwright OS dependencies
         if: steps.playwright-cache.outputs.cache-hit == 'true'
-        working-directory: /tmp/pw-browsers
-        run: npx playwright install-deps chromium
-
-      - name: Prepare playwright hash
-        run: pnpm list --json --filter playwright > /tmp/playwright_info.json
-
-      - name: Debug playwright hash
-        uses: actions/upload-artifact@v4
-        with:
-          path: /tmp/playwright_info.json
+        working-directory: ./tests
+        run: npx playwright install-deps
 
       - name: Run test
-        run: pnpm test:regressions --project=chromium
+        run: pnpm test:regressions
 
       - name: Upload screenshots to Argos CI
         run: pnpm test:argos
