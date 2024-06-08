@@ -1,5 +1,9 @@
 name: "Playwright Browser"
 description: "Run Playwright Visual Regression Testing"
+inputs:
+  argos-token:
+    description: Argos token
+    required: true
 
 runs:
   using: composite
@@ -30,10 +34,10 @@ runs:
       shell: bash
       run: pnpm test:regressions --project=chromium
       env:
-        ARGOS_TOKEN: ${{ secrets.ARGOS_TOKEN }}
+        ARGOS_TOKEN: ${{ inputs.argos-token }}
 
     - name: Upload screenshots to Argos CI
       shell: bash
       run: pnpm test:argos
       env:
-        ARGOS_TOKEN: ${{ secrets.ARGOS_TOKEN }}
+        ARGOS_TOKEN: ${{ inputs.argos-token }}

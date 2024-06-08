@@ -88,3 +88,8 @@ jobs:
         run: pnpm danger ci
         env:
           DANGER_GITHUB_API_TOKEN: ${{ secrets.DANGER_GITHUB_API_TOKEN }}
+
+      - name: Test browser
+        uses: actions/run-browser@v1
+        with:
+          argos-token: ${{ secrets.ARGOS_TOKEN }}
