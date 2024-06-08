@@ -90,6 +90,6 @@ jobs:
           DANGER_GITHUB_API_TOKEN: ${{ secrets.DANGER_GITHUB_API_TOKEN }}
 
       - name: Test browser
-        uses: actions/run-browser@v1
+        uses: ./.github/actions/run-browser
         with:
           argos-token: ${{ secrets.ARGOS_TOKEN }}
