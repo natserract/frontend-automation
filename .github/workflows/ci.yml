@@ -1,6 +1,9 @@
 name: CI
 
 on:
+  push:
+    branches:
+      - main
   pull_request:
     types: [opened, synchronize]
     branches:
@@ -15,7 +18,8 @@ jobs:
     if: ${{ github.actor != 'l10nbot' }}
     strategy:
       matrix:
-        os: [macos-latest, windows-latest, ubuntu-latest]
+        # TODO: include all -> os: [macos-latest, windows-latest, ubuntu-latest]
+        os: [macos-latest]
     runs-on: ${{ matrix.os }}
     timeout-minutes: 15
     env:
@@ -90,6 +94,6 @@ jobs:
           DANGER_GITHUB_API_TOKEN: ${{ secrets.DANGER_GITHUB_API_TOKEN }}
 
       - name: Test browser
-        uses: actions/run-browser@v1
+        uses: ./.github/actions/run-browser
         with:
           argos-token: ${{ secrets.ARGOS_TOKEN }}

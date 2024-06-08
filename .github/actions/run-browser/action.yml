@@ -9,7 +9,7 @@ runs:
   using: composite
 
   steps:
-    - name: Cache Playwright browser binaries
+    - name: Cache playwright browser binaries
       uses: actions/cache@v3
       id: playwright-cache
       with:
@@ -22,13 +22,13 @@ runs:
       name: Install playwright browsers
       shell: bash
       run: npx playwright install --with-deps chromium
-      working-directory: ./tmp/pw-browsers
+      working-directory: ./tests
 
     - if: ${{ steps.playwright-cache.outputs.cache-hit == 'true' }}
       name: Install Playwright OS dependencies
       shell: bash
       run: npx playwright install-deps chromium
-      working-directory: ./tmp/pw-browsers
+      working-directory: ./tests
 
     - name: Run test
       shell: bash
