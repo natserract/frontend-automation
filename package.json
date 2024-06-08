@@ -13,7 +13,7 @@
     "test": "node scripts/test.mjs",
     "test:extended": "pnpm lint && turbo run test",
     "test:regressions": "playwright test",
-    "test:argos": "node ./scripts/runArgos.js",
+    "test:argos": "node ./scripts/runArgos.mjs",
     "prepare": "husky"
   },
   "devDependencies": {
