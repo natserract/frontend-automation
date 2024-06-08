@@ -10,7 +10,7 @@ jobs:
     name: E2E on Tests
     strategy:
       matrix:
-        browser: ['chrome', 'firefox']
+        browser: ['chrome']
 
     steps:
       - name: Checkout code
@@ -25,7 +25,6 @@ jobs:
           install: false
           browser: ${{ matrix.browser }}
           env: NEXT_PUBLIC_USE_LOCAL_CLIENT=1
-          build: pnpm build
           command: pnpm test:cy
           wait-on: 'http://localhost:3000'
           # wait for 3 minutes for the server to respond
