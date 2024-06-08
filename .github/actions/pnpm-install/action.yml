@@ -1,0 +1,56 @@
+name: "pnpm install"
+description: "Run pnpm install with node_modules linked and cache enabled"
+
+inputs:
+  enable-corepack:
+    description: "Enable Corepack"
+    required: false
+    default: "true"
+
+runs:
+  using: composite
+
+  steps:
+    - name: Enable Corepack
+      if: ${{ inputs.enable-corepack == 'true' }}
+      shell: bash
+      working-directory: ${{ inputs.cwd }}
+      run: |
+        corepack enable
+        echo "corepack enabled"
+
+    - name: Set up pnpm
+      uses: pnpm/action-setup@v3
+      with:
+        version: 8
+
+    - name: Expose pnpm config(s) through "$GITHUB_OUTPUT"
+      id: pnpm-config
+      shell: bash
+      run: |
+        echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+    - name: Cache rotation keys
+      id: cache-rotation
+      shell: bash
+      run: |
+        echo "YEAR_MONTH=$(/bin/date -u "+%Y%m")" >> $GITHUB_OUTPUT
+
+    - uses: actions/cache@v3
+      name: Setup pnpm cache
+      with:
+        path: ${{ steps.pnpm-config.outputs.STORE_PATH }}
+        key: ${{ runner.os }}-pnpm-store-cache-${{ steps.cache-rotation.outputs.YEAR_MONTH }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+        restore-keys: |
+          ${{ runner.os }}-pnpm-store-cache-${{ steps.cache-rotation.outputs.YEAR_MONTH }}-
+
+    - name: Setup Node.js 18 environment
+      uses: actions/setup-node@v4
+      with:
+        node-version: 18
+        cache: "pnpm" # https://github.com/actions/setup-node/blob/main/docs/advanced-usage.md#caching-packages-dependencies
+
+    - name: Install dependencies
+      shell: bash
+      run: pnpm install
+      working-directory: ${{ inputs.cwd }}
