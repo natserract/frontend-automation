@@ -1,15 +1,15 @@
-import glob from "fast-glob";
-import fse from "fs-extra";
-import lodashChunk from "lodash.chunk";
-import { upload } from "@argos-ci/core";
+import glob from 'fast-glob'
+import fse from 'fs-extra'
+import lodashChunk from 'lodash.chunk'
+import { upload } from '@argos-ci/core'
 
-const screenshotsBase = "tests/regressions/screenshots/chrome";
-const screenshotsTmp = "tests/regressions/screenshots/argos";
-const BATCH_SIZE = 200;
+const screenshotsBase = 'tests/regressions/screenshots/chrome'
+const screenshotsTmp = 'tests/regressions/screenshots/argos'
+const BATCH_SIZE = 200
 
 async function run() {
-  const screenshots = await glob(`${screenshotsBase}/**/*`);
-  const chunks = lodashChunk(screenshots, BATCH_SIZE);
+  const screenshots = await glob(`${screenshotsBase}/**/*`)
+  const chunks = lodashChunk(screenshots, BATCH_SIZE)
 
   await Promise.all(
     chunks.map((chunk, chunkIndex) =>
@@ -17,12 +17,12 @@ async function run() {
         chunk.map((screenshot) => {
           return fse.move(
             screenshot,
-            `${screenshotsTmp}/${chunkIndex}/${screenshot.replace(screenshotsBase, "")}`,
-          );
-        }),
-      ),
-    ),
-  );
+            `${screenshotsTmp}/${chunkIndex}/${screenshot.replace(screenshotsBase, '')}`
+          )
+        })
+      )
+    )
+  )
 
   for (let i = 0; i < chunks.length; i += 1) {
     // eslint-disable-next-line no-await-in-loop
@@ -35,15 +35,15 @@ async function run() {
         total: chunks.length,
         nonce: process.env.CIRCLE_BUILD_NUM,
       },
-    });
+    })
 
     console.log(
-      `Batch of ${chunks[i].length} screenshots uploaded. Build URL: ${result.build.url}`,
-    );
+      `Batch of ${chunks[i].length} screenshots uploaded. Build URL: ${result.build.url}`
+    )
   }
 }
 
 run().catch((error) => {
-  console.error(error);
-  process.exit(1);
-});
+  console.error(error)
+  process.exit(1)
+})

@@ -1,1 +1,1 @@
-import "./commands/utils";
+import './commands/utils'

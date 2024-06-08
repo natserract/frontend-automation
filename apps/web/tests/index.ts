@@ -1,1 +1,1 @@
-export * from "./createRenderer";
+export * from './createRenderer'

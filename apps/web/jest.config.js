@@ -1,47 +1,47 @@
-const nextJest = require("next/jest.js");
+const nextJest = require('next/jest.js')
 
 const createJestConfig = nextJest({
   // Provide the path to your Next.js app to load next.config.js and .env files in your test environment
-  dir: "./",
-});
+  dir: './',
+})
 
 const config = {
-  displayName: "UI Core",
-  roots: ["<rootDir>"],
-  testMatch: ["**/*.test.{js,ts,jsx,tsx}"],
-  testEnvironment: "jsdom",
+  displayName: 'UI Core',
+  roots: ['<rootDir>'],
+  testMatch: ['**/*.test.{js,ts,jsx,tsx}'],
+  testEnvironment: 'jsdom',
   /** @see https://mswjs.io/docs/migrations/1.x-to-2.x#cannot-find-module-mswnode-jsdom */
   // setupFiles: ["./jest.polyfills.js"],
   /* @see https://mswjs.io/docs/migrations/1.x-to-2.x#cannot-find-module-mswnode-jsdom */
   testEnvironmentOptions: {
-    customExportConditions: [""],
+    customExportConditions: [''],
   },
   /* Tells jest to ignore duplicated manual mock files, such as index.js */
-  modulePathIgnorePatterns: [".*__mocks__.*"],
-  testPathIgnorePatterns: ["node_modules/", "dist/"],
+  modulePathIgnorePatterns: ['.*__mocks__.*'],
+  testPathIgnorePatterns: ['node_modules/', 'dist/'],
   transform: {
-    "^.+\\.tsx?$": [
-      "ts-jest",
+    '^.+\\.tsx?$': [
+      'ts-jest',
       {
         useESM: true,
       },
     ],
   },
   transformIgnorePatterns: [
-    "/node_modules/",
-    "^.+\\.module\\.(css|sass|scss)$",
+    '/node_modules/',
+    '^.+\\.module\\.(css|sass|scss)$',
   ],
-  globalSetup: "<rootDir>/tests/global-setup.js",
+  globalSetup: '<rootDir>/tests/global-setup.js',
   moduleNameMapper: {
-    "\\.(gif|ttf|eot|svg|png)$": "<rootDir>/tests/__mocks__/fileMock.js", // for imgs/assets
-    "\\.(css|less|sass|scss)$": "identity-obj-proxy", // for styles
-    "^@/(.*)$": "<rootDir>/$1", // for Path aliases
+    '\\.(gif|ttf|eot|svg|png)$': '<rootDir>/tests/__mocks__/fileMock.js', // for imgs/assets
+    '\\.(css|less|sass|scss)$': 'identity-obj-proxy', // for styles
+    '^@/(.*)$': '<rootDir>/$1', // for Path aliases
   },
-  setupFilesAfterEnv: ["<rootDir>/setupTests.js"],
+  setupFilesAfterEnv: ['<rootDir>/setupTests.js'],
   watchPlugins: [
-    "jest-watch-typeahead/filename",
-    "jest-watch-typeahead/testname",
+    'jest-watch-typeahead/filename',
+    'jest-watch-typeahead/testname',
   ],
-};
+}
 
-module.exports = createJestConfig(config);
+module.exports = createJestConfig(config)

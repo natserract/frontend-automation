@@ -1,73 +1,73 @@
-import * as React from "react";
-import * as ReactDOMServer from "react-dom/server";
+import * as React from 'react'
+import * as ReactDOMServer from 'react-dom/server'
 import {
   renderHook as renderHookRTL,
   render as renderRTL,
   RenderOptions as RTLRenderOptions,
   RenderResult as RTLRenderResult,
   RenderHookResult,
-} from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+} from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 
 export interface RenderConfiguration {
-  renderOptions?: RTLRenderOptions;
-  userEventOptions?: Parameters<typeof userEvent.setup>[0];
+  renderOptions?: RTLRenderOptions
+  userEventOptions?: Parameters<typeof userEvent.setup>[0]
 }
 
-export type RenderOptions = Partial<RenderConfiguration>;
+export type RenderOptions = Partial<RenderConfiguration>
 
 export interface RenderResult extends RTLRenderResult {
-  user: ReturnType<typeof userEvent.setup>;
+  user: ReturnType<typeof userEvent.setup>
 }
 
 export interface RenderToStringResult {
-  container: HTMLElement;
-  hydrate(): RenderResult;
+  container: HTMLElement
+  hydrate(): RenderResult
 }
 
 interface ProvidersProps {
-  children: React.ReactNode;
+  children: React.ReactNode
 }
 
 // (e.g: React Query provider, Redux, IntlProvider, etc)
 function Providers({ children }: ProvidersProps) {
-  return <>{children}</>;
+  return <>{children}</>
 }
 
 function render(
   element: React.ReactElement,
-  options: RenderOptions = {},
+  options: RenderOptions = {}
 ): RenderResult {
-  const { renderOptions, userEventOptions } = options;
-  const { wrapper, ...localRenderOptions } = renderOptions ?? {};
+  const { renderOptions, userEventOptions } = options
+  const { wrapper, ...localRenderOptions } = renderOptions ?? {}
 
   const testingLibraryRenderResult = renderRTL(element, {
     ...localRenderOptions,
     wrapper,
-  });
+  })
 
   const result: RenderResult = {
     ...testingLibraryRenderResult,
     user: userEvent.setup(userEventOptions),
-  };
+  }
 
-  return result;
+  return result
 }
 
 interface ServerRenderConfiguration extends RenderConfiguration {
-  container: HTMLElement;
+  container: HTMLElement
 }
 function renderToString(
   element: React.ReactElement,
-  configuration: ServerRenderConfiguration,
+  configuration: ServerRenderConfiguration
 ): RenderToStringResult {
-  const { container, renderOptions } = configuration;
+  const { container, renderOptions } = configuration
   const { wrapper: Wrapper = React.Fragment, ...localRenderOptions } =
-    renderOptions ?? {};
+    renderOptions ?? {}
 
   container.innerHTML = ReactDOMServer.renderToString(
-    <Wrapper>{element}</Wrapper>,
-  );
+    <Wrapper>{element}</Wrapper>
+  )
 
   return {
     container,
@@ -77,73 +77,73 @@ function renderToString(
           ...localRenderOptions,
           hydrate: true,
         },
-      });
+      })
     },
-  };
+  }
 }
 
 function renderHook<Result, Props>(
   hook: (initialProps: Props) => Result,
-  options: RenderOptions = {},
+  options: RenderOptions = {}
 ): RenderHookResult<Result, Props> {
-  const { renderOptions } = options;
-  const { wrapper, ...localRenderOptions } = renderOptions ?? {};
+  const { renderOptions } = options
+  const { wrapper, ...localRenderOptions } = renderOptions ?? {}
 
   return renderHookRTL(hook, {
     ...localRenderOptions,
     wrapper,
-  });
+  })
 }
 
 interface Renderer {
-  render(element: React.ReactElement, options?: RenderOptions): RenderResult;
+  render(element: React.ReactElement, options?: RenderOptions): RenderResult
   renderToString(
     element: React.ReactElement,
-    options?: RenderOptions,
-  ): RenderToStringResult;
+    options?: RenderOptions
+  ): RenderToStringResult
   renderHook<Result, Props>(
     hook: (initialProps: Props) => Result,
-    options?: RenderOptions,
-  ): RenderHookResult<Result, Props>;
+    options?: RenderOptions
+  ): RenderHookResult<Result, Props>
 }
 
 export function createRenderer(): Renderer {
-  let prepared = false;
-  let serverContainer: HTMLElement;
+  let prepared = false
+  let serverContainer: HTMLElement
 
   beforeEach(() => {
-    serverContainer = document.createElement("div");
-    document.body.appendChild(serverContainer);
+    serverContainer = document.createElement('div')
+    document.body.appendChild(serverContainer)
 
-    prepared = true;
-  });
+    prepared = true
+  })
 
   afterEach(() => {
-    serverContainer.remove();
-    serverContainer = null!;
-  });
+    serverContainer.remove()
+    serverContainer = null!
+  })
 
   function createWrapper(options: RenderOptions) {
     const { wrapper: InnerWrapper = React.Fragment } =
-      options.renderOptions ?? {};
+      options.renderOptions ?? {}
 
     return function Wrapper({ children }: { children?: React.ReactNode }) {
       return (
         <Providers>
           <InnerWrapper>{children}</InnerWrapper>
         </Providers>
-      );
-    };
+      )
+    }
   }
 
   return {
     render(element, options = {}) {
       if (!prepared) {
         throw new Error(
-          "Unable to finish setup before `render()` was called. " +
-            "This usually indicates that `render()` was called in a `before()` or `beforeEach` hook. " +
-            "Move the call into each `it()`. Otherwise you cannot run a specific test and we cannot isolate each test.",
-        );
+          'Unable to finish setup before `render()` was called. ' +
+            'This usually indicates that `render()` was called in a `before()` or `beforeEach` hook. ' +
+            'Move the call into each `it()`. Otherwise you cannot run a specific test and we cannot isolate each test.'
+        )
       }
 
       return render(element, {
@@ -152,15 +152,15 @@ export function createRenderer(): Renderer {
           ...options.renderOptions,
           wrapper: createWrapper(options),
         },
-      });
+      })
     },
     renderToString(element, options = {}) {
       if (!prepared) {
         throw new Error(
-          "Unable to finish setup before `render()` was called. " +
-            "This usually indicates that `render()` was called in a `before()` or `beforeEach` hook. " +
-            "Move the call into each `it()`. Otherwise you cannot run a specific test and we cannot isolate each test.",
-        );
+          'Unable to finish setup before `render()` was called. ' +
+            'This usually indicates that `render()` was called in a `before()` or `beforeEach` hook. ' +
+            'Move the call into each `it()`. Otherwise you cannot run a specific test and we cannot isolate each test.'
+        )
       }
 
       return renderToString(element, {
@@ -170,15 +170,15 @@ export function createRenderer(): Renderer {
           ...options.renderOptions,
           wrapper: createWrapper(options),
         },
-      });
+      })
     },
     renderHook(hook, options = {}) {
       if (!prepared) {
         throw new Error(
-          "Unable to finish setup before `render()` was called. " +
-            "This usually indicates that `render()` was called in a `before()` or `beforeEach` hook. " +
-            "Move the call into each `it()`. Otherwise you cannot run a specific test and we cannot isolate each test.",
-        );
+          'Unable to finish setup before `render()` was called. ' +
+            'This usually indicates that `render()` was called in a `before()` or `beforeEach` hook. ' +
+            'Move the call into each `it()`. Otherwise you cannot run a specific test and we cannot isolate each test.'
+        )
       }
 
       return renderHook(hook, {
@@ -187,7 +187,7 @@ export function createRenderer(): Renderer {
           ...options.renderOptions,
           wrapper: createWrapper(options),
         },
-      });
+      })
     },
-  };
+  }
 }
