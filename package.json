@@ -10,8 +10,8 @@
     "prettier": "pretty-quick --ignore-path .eslintignore --branch next",
     "prettier:check": "prettier --check .",
     "prettier:fix": "prettier --write .",
-    "test:": "node scripts/test.mjs",
-    "test:cy": "turbo run test:cy",
+    "test": "node scripts/test.mjs",
+    "test:extended": "pnpm lint && turbo run test",
     "test:regressions": "playwright test",
     "test:argos": "node ./scripts/runArgos.js",
     "prepare": "husky"

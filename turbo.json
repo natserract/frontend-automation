@@ -14,10 +14,6 @@
       "persistent": true
     },
     "typescript": {},
-    "test": {
-      "dependsOn": ["build"]
-    },
-    "test:cy": {},
-    "test:e2e": {}
+    "test": {}
   }
 }
