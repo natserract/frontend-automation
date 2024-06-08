@@ -1,45 +1,45 @@
 // danger has to be the first thing required!
-import { danger, markdown } from "danger";
+import { danger, markdown } from 'danger'
 
-const dangerCommand = process.env.DANGER_COMMAND;
+const dangerCommand = process.env.DANGER_COMMAND
 
-const maxCommitMessageLength = 72;
+const maxCommitMessageLength = 72
 
 function checkGitCommitMessage() {
-  const commitMessage = danger.git.commits[0]?.message;
-  if (!commitMessage) return false;
+  const commitMessage = danger.git.commits[0]?.message
+  if (!commitMessage) return false
 
   // Check if the commit message follows the Conventional Commits specification
   const conventionalCommitsRegex =
-    /^(feat|fix|docs|style|refactor|test|chore)(\(.+\))?!?: .+/;
+    /^(feat|fix|docs|style|refactor|test|chore)(\(.+\))?!?: .+/
   if (!conventionalCommitsRegex.test(commitMessage)) {
-    return false;
+    return false
   }
 
   // Check if the commit message is too long
   if (commitMessage.length > maxCommitMessageLength) {
-    return false;
+    return false
   }
 
-  return true;
+  return true
 }
 
 async function run() {
-  const isCommitMessageValid = checkGitCommitMessage();
+  const isCommitMessageValid = checkGitCommitMessage()
 
   if (!isCommitMessageValid) {
     const message =
-      "## 🚀 Improve Commit Message" +
-      "\n Your Git commit message could be improved to follow best practices:\n\n" +
-      "- Use the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) specification\n" +
+      '## 🚀 Improve Commit Message' +
+      '\n Your Git commit message could be improved to follow best practices:\n\n' +
+      '- Use the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) specification\n' +
       `- Keep the commit message under ${maxCommitMessageLength} characters\n\n` +
-      "Please update your commit message to match these guidelines.";
+      'Please update your commit message to match these guidelines.'
 
-    markdown(message);
+    markdown(message)
   }
 }
 
 run().catch((error) => {
-  console.error(error);
-  process.exit(1);
-});
+  console.error(error)
+  process.exit(1)
+})
