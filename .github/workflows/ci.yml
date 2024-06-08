@@ -113,6 +113,8 @@ jobs:
 
       - name: Run test
         run: pnpm test:regressions --project=chromium
+        env:
+          ARGOS_TOKEN: ${{ secrets.ARGOS_TOKEN }}
 
       - name: Upload screenshots to Argos CI
         run: pnpm test:argos
