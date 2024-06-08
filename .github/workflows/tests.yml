@@ -1,5 +1,11 @@
 name: e2e Tests
-on: [push]
+
+on:
+  pull_request:
+    types: [opened, reopened, labeled, unlabeled, synchronize]
+    branches:
+      - main
+      - develop
 
 permissions: {}
 
