@@ -9,7 +9,7 @@ describe("<Button />", () => {
   describe("prop: children", () => {
     it("should renders children", () => {
       const { getByTestId } = render(<Button>Click Me!</Button>);
-      expect(getByTestId("root").innerHTML).toEqual("Click Me!");
+      expect(getByTestId("root")).toHaveTextContent("Click Me!");
 
       const button = getByTestId("root");
       act(() => {

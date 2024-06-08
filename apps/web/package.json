@@ -8,6 +8,11 @@
     "start": "next start",
     "lint": "next lint",
     "typescript": "tsc -p tsconfig.json",
+    "cy:install": "cypress install",
+    "cy:run": "cypress run",
+    "cy:open": "cypress open",
+    "test:e2e": "start-server-and-test dev http://localhost:3000/ cy:open",
+    "test:e2e:run": "start-server-and-test dev http://localhost:3000/ cy:run",
     "test:front": "jest",
     "test:front:coverage": "jest --coverage",
     "test:front:watch": "jest --watch"
@@ -37,6 +42,7 @@
     "jest-watch-typeahead": "^2.2.2",
     "local-cypress": "^1.2.6",
     "postcss": "^8",
+    "start-server-and-test": "^2.0.4",
     "tailwindcss": "^3.4.1",
     "ts-jest": "^29.1.4",
     "typescript": "^5"
