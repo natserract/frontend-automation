@@ -1,7 +1,13 @@
 name: e2e Tests
 on: [push]
+
+permissions: {}
+
 jobs:
-  checks:
+  build:
+    strategy:
+      matrix:
+        os: [macos-latest]
     runs-on: ${{ matrix.os }}
     timeout-minutes: 15
 
