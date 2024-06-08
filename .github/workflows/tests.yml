@@ -1,6 +1,10 @@
 name: e2e Tests
 
 on:
+  push:
+    branches:
+      - main
+      - develop
   pull_request:
     types: [opened, reopened, labeled, unlabeled, synchronize]
     branches:
