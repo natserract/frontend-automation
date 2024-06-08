@@ -74,8 +74,9 @@ jobs:
     steps:
       - checkout
       - install_packages
-      - run: npx playwright install
-      - run: npx playwright install chrome
+      - run:
+          name: Install playwright browsers
+          command: npx playwright install --with-deps chromium
       - run:
           name: Run test
           command: pnpm test:regressions --project=chromium
@@ -84,6 +85,18 @@ jobs:
           command: pnpm test:argos
           environment:
             ARGOS_TOKEN: $ARGOS_TOKEN
+
+      - save-pw-cache:
+          name: Save playwright cache
+          key: v6-playwright-{{ arch }}-{{ checksum "/tmp/playwright_info.json" }}
+          paths:
+            # Keep path in sync with "PLAYWRIGHT_BROWSERS_PATH"
+            # Can't use environment variables for `save_cache` paths (tested in https://app.circleci.com/pipelines/github/mui/material-ui/37813/workflows/5b1e207f-ac8b-44e7-9ba4-d0f9a01f5c55/jobs/223370)
+            - /tmp/pw-browsers
+
+      - store_artifacts:
+          name: Debug playwright hash
+          path: /tmp/playwright_info.json
 
 workflows:
   version: 2
