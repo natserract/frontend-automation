@@ -88,5 +88,3 @@ jobs:
         run: pnpm danger ci
         env:
           DANGER_GITHUB_API_TOKEN: ${{ secrets.DANGER_GITHUB_API_TOKEN }}
-
-      - uses: ./.github/actions/run-browser
