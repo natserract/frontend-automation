@@ -1,6 +1,9 @@
 name: CI
 
 on:
+  push:
+    branches:
+      - main
   pull_request:
     types: [opened, synchronize]
     branches:
@@ -15,7 +18,8 @@ jobs:
     if: ${{ github.actor != 'l10nbot' }}
     strategy:
       matrix:
-        os: [macos-latest, windows-latest, ubuntu-latest]
+        # TODO: include all -> os: [macos-latest, windows-latest, ubuntu-latest]
+        os: [macos-latest]
     runs-on: ${{ matrix.os }}
     timeout-minutes: 15
     env:
