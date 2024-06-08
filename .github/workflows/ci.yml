@@ -102,19 +102,19 @@ jobs:
       # Install browser binaries & OS dependencies if cache missed
       - name: Install playwright browsers
         if: steps.playwright-cache.outputs.cache-hit != 'true'
-        run: npx playwright install --with-deps
+        run: npx playwright install --with-deps chromium
         working-directory: ./tests
 
       # Install only the OS dependencies if cache hit
       - name: 🏗 Install Playwright OS dependencies
         if: steps.playwright-cache.outputs.cache-hit == 'true'
         working-directory: ./tests
-        run: npx playwright install-deps
+        run: npx playwright install-deps chromium
 
       - name: Run test
-        run: pnpm test:regressions
+        run: pnpm test:regressions --project=chromium
 
       - name: Upload screenshots to Argos CI
         run: pnpm test:argos
         env:
-          ARGOS_TOKEN: $ARGOS_TOKEN
+          ARGOS_TOKEN: ${{ secrets.ARGOS_TOKEN }}
