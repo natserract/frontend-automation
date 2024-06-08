@@ -1,7 +1,7 @@
-const glob = require("fast-glob");
-const fse = require("fs-extra");
-const lodashChunk = require("lodash.chunk");
-const { upload } = require("@argos-ci/core");
+import glob from "fast-glob";
+import fse from "fs-extra";
+import lodashChunk from "lodash.chunk";
+import { upload } from "@argos-ci/core";
 
 const screenshotsBase = "tests/regressions/screenshots/chrome";
 const screenshotsTmp = "tests/regressions/screenshots/argos";
