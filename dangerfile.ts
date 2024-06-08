@@ -28,16 +28,12 @@ async function run() {
   const isCommitMessageValid = checkGitCommitMessage();
 
   if (!isCommitMessageValid) {
-    const message = `
-    ## 🚀 Improve Commit Message
-
-    Your Git commit message could be improved to follow best practices:
-
-    - Use the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) specification
-    - Keep the commit message under ${maxCommitMessageLength} characters
-
-    Please update your commit message to match these guidelines.
-    `;
+    const message =
+      "## 🚀 Improve Commit Message" +
+      "\n Your Git commit message could be improved to follow best practices:\n\n" +
+      "- Use the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) specification\n" +
+      "- Keep the commit message under ${maxCommitMessageLength} characters\n\n" +
+      "Please update your commit message to match these guidelines.";
 
     markdown(message);
   }
