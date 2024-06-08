@@ -61,14 +61,13 @@ jobs:
             NODE_OPTIONS: --max-old-space-size=3072
   test_builds:
     <<: *default-job
+    parallelism: 6
     steps:
       - checkout
       - install_packages
       - run:
-          name: Prepare danger on PRs
-          command: pnpm danger ci
-          environment:
-            DANGER_COMMAND: checkGitCommitMessage
+          name: Builds
+          command: pnpm build
   test_regressions:
     <<: *default-job
     steps:
