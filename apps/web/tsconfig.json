@@ -1,11 +1,16 @@
 {
   "extends": "@repo/typescript-config/nextjs.json",
   "compilerOptions": {
+    "baseUrl": ".",
     "plugins": [
       {
         "name": "next"
       }
-    ]
+    ],
+    "paths": {
+      "@/tests/*": ["./tests/*"],
+      "@/components/*": ["./components/*"]
+    }
   },
   "include": [
     "next-env.d.ts",
@@ -14,5 +19,12 @@
     "**/*.tsx",
     ".next/types/**/*.ts"
   ],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules"],
+  /* Cypress */
+  "types": [
+    "cypress",
+    "@testing-library/cypress",
+    "jest",
+    "@testing-library/jest-dom"
+  ]
 }
