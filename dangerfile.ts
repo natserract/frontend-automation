@@ -28,9 +28,7 @@ async function run() {
   const isCommitMessageValid = checkGitCommitMessage();
 
   if (!isCommitMessageValid) {
-    const message = `
-    ## 🚀 Improve Commit Message
-
+    const message = `## 🚀 Improve Commit Message
     Your Git commit message could be improved to follow best practices:
 
     - Use the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) specification
