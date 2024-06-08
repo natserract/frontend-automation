@@ -18,5 +18,8 @@ jobs:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           fetch-depth: 2
 
+      - name: Install packages
+        uses: ./.github/actions/pnpm-install
+
       - name: E2E Test (Headless)
         run: pnpm test
