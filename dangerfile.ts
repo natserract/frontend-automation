@@ -32,7 +32,7 @@ async function run() {
       "## 🚀 Improve Commit Message" +
       "\n Your Git commit message could be improved to follow best practices:\n\n" +
       "- Use the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) specification\n" +
-      "- Keep the commit message under ${maxCommitMessageLength} characters\n\n" +
+      `- Keep the commit message under ${maxCommitMessageLength} characters\n\n` +
       "Please update your commit message to match these guidelines.";
 
     markdown(message);
