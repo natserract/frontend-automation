@@ -1,0 +1,39 @@
+name: "Playwright Browser"
+description: "Run Playwright Visual Regression Testing"
+
+runs:
+  using: composite
+
+  steps:
+    - name: Cache Playwright browser binaries
+      uses: actions/cache@v3
+      id: playwright-cache
+      with:
+        path: "~/.cache/ms-playwright"
+        key: "${{ runner.os }}-playwright-${{ env.PLAYWRIGHT_VERSION }}"
+        restore-keys: |
+          ${{ runner.os }}-playwright-
+
+    - if: ${{ steps.playwright-cache.outputs.cache-hit != 'true' }}
+      name: Install playwright browsers
+      shell: bash
+      run: npx playwright install --with-deps chromium
+      working-directory: ./tmp/pw-browsers
+
+    - if: ${{ steps.playwright-cache.outputs.cache-hit == 'true' }}
+      name: Install Playwright OS dependencies
+      shell: bash
+      run: npx playwright install-deps chromium
+      working-directory: ./tmp/pw-browsers
+
+    - name: Run test
+      shell: bash
+      run: pnpm test:regressions --project=chromium
+      env:
+        ARGOS_TOKEN: ${{ secrets.ARGOS_TOKEN }}
+
+    - name: Upload screenshots to Argos CI
+      shell: bash
+      run: pnpm test:argos
+      env:
+        ARGOS_TOKEN: ${{ secrets.ARGOS_TOKEN }}
