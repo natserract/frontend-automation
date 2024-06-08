@@ -86,7 +86,7 @@ jobs:
           environment:
             ARGOS_TOKEN: $ARGOS_TOKEN
 
-      - save-pw-cache:
+      - save_cache:
           name: Save playwright cache
           key: v6-playwright-{{ arch }}-{{ checksum "/tmp/playwright_info.json" }}
           paths:
