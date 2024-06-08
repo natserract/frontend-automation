@@ -11,12 +11,12 @@
     "cy:install": "cypress install",
     "cy:run": "cypress run",
     "cy:open": "cypress open",
-    "test": "concurrently \"pnpm test:e2e:run\" \"pnpm test:front\"",
-    "test:e2e": "start-server-and-test dev http://localhost:3000/ cy:open",
-    "test:e2e:run": "start-server-and-test dev http://localhost:3000/ cy:run",
-    "test:front": "jest",
-    "test:front:coverage": "jest --coverage",
-    "test:front:watch": "jest --watch"
+    "test:all": "concurrently \"pnpm test:front\" \"pnpm test:e2e:run\"",
+    "test:cy": "start-server-and-test dev http://localhost:3000/ cy:open",
+    "test:cy:run": "start-server-and-test dev http://localhost:3000/ cy:run",
+    "test:e2e": "jest",
+    "test:e2e:coverage": "jest --coverage",
+    "test:e2e:watch": "jest --watch"
   },
   "dependencies": {
     "@repo/ui": "workspace:*",
