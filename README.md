@@ -2,7 +2,16 @@
 
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=natserract_frontend-automation&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=natserract_frontend-automation)
 
-This is an official starter Turborepo.
+## What's inside:
+
+This turborepo uses [pnpm](https://pnpm.io/) as a package manager. It includes the following packages:
+
+- [Github Actions](https://github.com/features/actions): automate software workflows, including building, testing, and deploying code directly from GitHub.
+- [Renovate](https://www.mend.io/renovate/): automatically detect and propose updates for dependencies in your project
+- [Danger.js](https://github.com/danger/danger-js): automate code review tasks and enforce consistency. Provide feedback and suggestions to developers
+- [Husky](https://typicode.github.io/husky): automatically run Git hooks (e.g., pre-commit, pre-push) to enforce code quality standards
+- [Argos](https://argos-ci.com/): implement visual regression testing to detect and prevent unintended visual changes in your web application
+- [SonarCloud](https://sonarcloud.io): continuously inspect the quality of your codebase, identifying bugs, vulnerabilities, and code smells
 
 ## Knowledgements
 
@@ -13,7 +22,7 @@ This is an official starter Turborepo.
 The Gitflow workflow is a popular branching model for managing Git repositories. It consists of the following main components:
 
 1. **Master Branch**: The master branch represents the official release history. This branch should always be deployable.
-Develop Branch: The develop branch serves as an integration branch for features. New features are first merged into this branch before being incorporated into the master branch.
+   Develop Branch: The develop branch serves as an integration branch for features. New features are first merged into this branch before being incorporated into the master branch.
 
 2. **Feature Branches**: When starting a new feature, developers create a new branch off the develop branch. These feature branches should have descriptive names, such as feature/user-authentication or feature/shopping-cart. Once the feature is complete, the branch is merged back into develop.
 
@@ -24,16 +33,7 @@ Develop Branch: The develop branch serves as an integration branch for features.
 5. **Tagging**: The master branch is typically tagged with version numbers (e.g., v1.2.3) to mark official releases.
 
 **References**:
+
 - https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow
 - https://nvie.com/posts/a-successful-git-branching-model/
 - https://docs.github.com/en/get-started/using-github/github-flow
-
-## What's inside:
-
-- [x] github actions https://github.com/features/actions
-- [x] renovate https://www.mend.io/renovate/
-- [x] pnpm https://pnpm.io/
-- [x] dangerjs https://github.com/danger/danger-js
-- [x] husky https://typicode.github.io/husky/
-- [x] argos-ci https://argos-ci.com/
-- [x] sonarcloud https://sonarcloud.io/
