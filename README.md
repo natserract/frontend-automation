@@ -7,6 +7,7 @@
 This turborepo uses [pnpm](https://pnpm.io/) as a package manager. It includes the following packages:
 
 - [Github Actions](https://github.com/features/actions): automate software workflows, including building, testing, and deploying code directly from GitHub.
+- [CircleCI](https://circleci.com/) standalone CI/CD platform allows you to automate your build, test, and deployment pipeline. CircleCI is scalable, so it can meet the needs of large development teams.
 - [Renovate](https://www.mend.io/renovate/): automatically detect and propose updates for dependencies in your project
 - [Danger.js](https://github.com/danger/danger-js): automate code review tasks and enforce consistency. Provide feedback and suggestions to developers
 - [Husky](https://typicode.github.io/husky): automatically run Git hooks (e.g., pre-commit, pre-push) to enforce code quality standards
