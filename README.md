@@ -1,8 +1,6 @@
 # CI/CD pipeline
 
-![ci-develop](https://github.com/github/docs/actions/workflows/ci.yml/badge.svg?branch=develop)
-
-[![SonarCloud](https://sonarcloud.io/images/project_badges/sonarcloud-orange.svg)](https://sonarcloud.io/summary/new_code?id=natserract_frontend-automation)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=natserract_frontend-automation&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=natserract_frontend-automation)
 
 This is an official starter Turborepo.
 
