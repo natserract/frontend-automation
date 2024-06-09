@@ -16,7 +16,7 @@ jobs:
     strategy:
       matrix:
         # IF include all -> os: [macos-latest, windows-latest, ubuntu-latest]
-        os: [macos-latest]
+        os: [ubuntu-latest]
     runs-on: ${{ matrix.os }}
     timeout-minutes: 15
     env:
