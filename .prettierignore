@@ -8,3 +8,4 @@ target/
 compiled/
 
 pnpm-lock.yaml
+README.md
