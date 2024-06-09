@@ -6,6 +6,13 @@ on:
 
 jobs:
   build:
+    strategy:
+      max-parallel: 1
+      matrix:
+        channel:
+          - latest
+          - dev
+
     runs-on: ubuntu-latest
     env:
       TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
@@ -27,25 +34,6 @@ jobs:
         run: pnpm typescript
         env:
           NODE_OPTIONS: --max-old-space-size=4096
-
-  changesets_version:
-    needs: [build]
-    strategy:
-      max-parallel: 1
-      matrix:
-        channel:
-          - latest
-          - dev
-
-    runs-on: ubuntu-latest
-    env:
-      TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
-      TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
 
       ##- name: Set NPMRC
       ## run: echo "//registry.npmjs.org/:_authToken=${NPM_AUTH_TOKEN}" > .npmrc
