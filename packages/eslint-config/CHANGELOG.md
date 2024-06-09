@@ -1,5 +1,11 @@
 # @repo/eslint-config
 
+## 3.0.0
+
+### Major Changes
+
+- [`f95f5b6`](https://github.com/natserract/frontend-automation/commit/f95f5b6f51766d51a12a071c750277068a1a7689) Thanks [@natserract](https://github.com/natserract)! - update docs
+
 ## 2.0.0
 
 ### Major Changes
