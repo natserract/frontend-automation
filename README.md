@@ -4,6 +4,9 @@
 
 This is an official starter Turborepo.
 
+## Requirements
+- [Git Flow](https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow)
+
 ## What's inside:
 
 - [x] github actions https://github.com/features/actions
@@ -12,4 +15,4 @@ This is an official starter Turborepo.
 - [x] dangerjs https://github.com/danger/danger-js
 - [x] husky https://typicode.github.io/husky/
 - [x] argos-ci https://argos-ci.com/
-- [x] sonarcloud https://sonarcloud.io/ 
+- [x] sonarcloud https://sonarcloud.io/
