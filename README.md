@@ -14,6 +14,19 @@ This turborepo uses [pnpm](https://pnpm.io/) as a package manager. It includes t
 - [Argos](https://argos-ci.com/): implement visual regression testing to detect and prevent unintended visual changes in your web application
 - [SonarCloud](https://sonarcloud.io): continuously inspect the quality of your codebase, identifying bugs, vulnerabilities, and code smells
 
+## PR Workflow
+
+All pull requests should include a changeset. To create a changeset, ensure you don't have any uncommitted changes and then run the following command:
+
+```bash
+# from the root of the repo
+pnpm changeset
+```
+
+Choose the package or packages that were affected by your work. _(Tip: you may have to wait a couple of seconds after selecting your packages, sometimes it doesn't get registered and it'll ask you to pick again)_
+
+> Note: You do not need to select packages which depend on changes you made in other packages, the release process will do this automatically for you later on. Just choose packages you worked on directly.
+
 ## Knowledgements
 
 ### Gitflow workflow
