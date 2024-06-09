@@ -32,3 +32,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+        with:
+          args: >
+            -Dsonar.projectKey=natserract_frontend-automation
+            -Dsonar.organization=natserract
