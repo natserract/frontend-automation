@@ -8,6 +8,8 @@ This is an official starter Turborepo.
 
 ### Gitflow workflow
 
+[![Git workflow](https://res.cloudinary.com/dqo6txtrv/image/upload/v1717904646/Natserract%20Blog/mermaid-diagram-2024-06-09-114256_i3mxyu.png)
+
 The Gitflow workflow is a popular branching model for managing Git repositories. It consists of the following main components:
 
 1. _Master Branch_: The master branch represents the official release history. This branch should always be deployable.
@@ -25,7 +27,6 @@ _References_:
 - https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow
 - https://nvie.com/posts/a-successful-git-branching-model/
 - https://docs.github.com/en/get-started/using-github/github-flow
-- https://danielkummer.github.io/git-flow-cheatsheet/
 
 ## What's inside:
 
