@@ -13,6 +13,7 @@ This turborepo uses [pnpm](https://pnpm.io/) as a package manager. It includes t
 - [Husky](https://typicode.github.io/husky): automatically run Git hooks (e.g., pre-commit, pre-push) to enforce code quality standards
 - [Argos](https://argos-ci.com/): implement visual regression testing to detect and prevent unintended visual changes in your web application
 - [SonarCloud](https://sonarcloud.io): continuously inspect the quality of your codebase, identifying bugs, vulnerabilities, and code smells
+- [Changesets](https://github.com/changesets/changesets): manage the versioning and release process for your monorepo, ensuring that interdependent packages are updated and released in a coordinated manner
 
 ## PR Workflow
 
