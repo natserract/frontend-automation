@@ -30,7 +30,7 @@ interface ProvidersProps {
 }
 
 // (e.g: React Query provider, Redux, IntlProvider, etc)
-function Providers({ children }: ProvidersProps) {
+function Providers({ children }: Readonly<ProvidersProps>) {
   return <>{children}</>
 }
 
