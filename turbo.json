@@ -13,6 +13,7 @@
       "cache": false,
       "persistent": true
     },
-    "typescript": {}
+    "typescript": {},
+    "test": {}
   }
 }

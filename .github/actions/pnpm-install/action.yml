@@ -1,11 +1,11 @@
-name: "pnpm install"
-description: "Run pnpm install with node_modules linked and cache enabled"
+name: 'pnpm install'
+description: 'Run pnpm install with node_modules linked and cache enabled'
 
 inputs:
   enable-corepack:
-    description: "Enable Corepack"
+    description: 'Enable Corepack'
     required: false
-    default: "true"
+    default: 'true'
 
 runs:
   using: composite
@@ -48,7 +48,7 @@ runs:
       uses: actions/setup-node@v4
       with:
         node-version: 18
-        cache: "pnpm" # https://github.com/actions/setup-node/blob/main/docs/advanced-usage.md#caching-packages-dependencies
+        cache: 'pnpm' # https://github.com/actions/setup-node/blob/main/docs/advanced-usage.md#caching-packages-dependencies
 
     - name: Install dependencies
       shell: bash
