@@ -1,5 +1,0 @@
----
-'web': minor
----
-
-Test release
