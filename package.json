@@ -14,11 +14,18 @@
     "test:extended": "pnpm lint && turbo run test",
     "test:regressions": "playwright test",
     "test:argos": "node ./scripts/runArgos.mjs",
-    "prepare": "husky"
+    "prepare": "husky",
+    "version": "pnpm exec changeset version",
+    "version:snapshot": "pnpm exec changeset version --snapshot",
+    "publish": "pnpm publish -r --no-git-checks --access public",
+    "publish:beta": "pnpm publish -r --tag beta --no-git-checks --access public",
+    "publish:dev": "pnpm publish -r --tag dev --no-git-checks --access public",
+    "push-tags": "pnpm exec changeset tag && git pull && git push --follow-tags"
   },
   "devDependencies": {
     "@argos-ci/core": "^2.2.0",
     "@argos-ci/playwright": "^3.0.4",
+    "@changesets/cli": "^2.27.5",
     "@playwright/test": "^1.44.1",
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
