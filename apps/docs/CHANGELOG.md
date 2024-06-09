@@ -1,4 +1,4 @@
-# web
+# docs
 
 ## 1.0.0
 
@@ -6,21 +6,7 @@
 
 - [`17eda95`](https://github.com/natserract/frontend-automation/commit/17eda95ddc3673d9912f10c1d2a6ef2976f79dce) Thanks [@natserract](https://github.com/natserract)! - use checkout@v2
 
-- [#12](https://github.com/natserract/frontend-automation/pull/12) [`b7d04d8`](https://github.com/natserract/frontend-automation/commit/b7d04d8f26cf4d0bc92c923749ca4f4e52526ec4) Thanks [@natserract](https://github.com/natserract)! - Chore, changesets
-
 ### Patch Changes
 
 - Updated dependencies [[`17eda95`](https://github.com/natserract/frontend-automation/commit/17eda95ddc3673d9912f10c1d2a6ef2976f79dce)]:
   - @repo/ui@1.0.0
-
-## 0.0.0
-
-### Minor Changes
-
-- 34d86c9: Test release
-
-## 0.0.0-20240609064941
-
-### Major Changes
-
-- Setup changesets
