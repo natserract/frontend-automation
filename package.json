@@ -31,6 +31,7 @@
     "fast-glob": "^3.3.2",
     "fs-extra": "^11.2.0",
     "husky": "^9.0.11",
+    "lint-staged": "^15.2.5",
     "lodash.chunk": "^4.2.0",
     "playwright": "^1.44.1",
     "prettier": "^3.2.5",
@@ -41,5 +42,13 @@
   "engines": {
     "node": ">=18",
     "pnpm": "8.15.8"
+  },
+  "lint-staged": {
+    "*.{json,js,ts,jsx,tsx,html}": [
+      "pretty-quick --ignore-path .eslintignore --staged"
+    ],
+    "*.{md,mdx,css,scss,yaml,yml}": [
+      "prettier --write"
+    ]
   }
 }
