@@ -7,7 +7,7 @@
     "dev": "turbo dev",
     "lint": "turbo lint",
     "typescript": "turbo run typescript -- --noEmit",
-    "prettier": "pretty-quick --ignore-path .eslintignore",
+    "prettier": "pretty-quick --ignore-path .eslintignore --branch main",
     "prettier:check": "prettier --check .",
     "prettier:fix": "prettier --write .",
     "test": "node scripts/test.mjs",
