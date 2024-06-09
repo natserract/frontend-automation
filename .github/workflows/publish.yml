@@ -45,6 +45,8 @@ jobs:
         run: |
           pnpm version:snapshot
           pnpm run publish:beta
+        env:
+          GITHUB_TOKEN: ${{ secrets.DEPLOY_TOKEN }}
 
       - name: Publish
         if: matrix.channel == 'latest'
