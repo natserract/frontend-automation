@@ -1,5 +1,15 @@
 # @repo/eslint-config
 
+## 4.2.0
+
+### Minor Changes
+
+- [`d3cbed8`](https://github.com/natserract/frontend-automation/commit/d3cbed804839bd8b71c7d80824bb9c204d87792a) Thanks [@natserract](https://github.com/natserract)! - released 2
+
+- [`cd3af3d`](https://github.com/natserract/frontend-automation/commit/cd3af3d42e3c93e89b0a9495d56a9563a3976008) Thanks [@natserract](https://github.com/natserract)! - released
+
+- [`4149532`](https://github.com/natserract/frontend-automation/commit/4149532272dca80eac06c6e82df40f774ae5f990) Thanks [@natserract](https://github.com/natserract)! - Test release
+
 ## 4.1.0
 
 ### Minor Changes
