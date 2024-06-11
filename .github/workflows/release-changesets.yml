@@ -3,7 +3,7 @@ name: release changesets
 on:
   push:
     branches:
-      - kick
+      - main
 
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
