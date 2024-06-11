@@ -28,7 +28,7 @@ jobs:
         id: cypress-cache-deps
         uses: actions/cache@v3
         with:
-          path: ~/.cache/Cypress
+          path: .cypress
           key: cypress-${{ runner.os }}-cypress-${{ hashFiles('pnpm-lock.yaml') }}
 
       - name: Install packages
