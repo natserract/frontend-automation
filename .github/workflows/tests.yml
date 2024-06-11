@@ -35,8 +35,6 @@ jobs:
       - name: Cypress install
         id: cypress-install
         uses: cypress-io/github-action@v6
-        with:
-          install: false
 
       - name: Run e2e tests
         run: pnpm test
