@@ -3,7 +3,7 @@ name: release changesets
 on:
   push:
     branches:
-      - main
+      - kick
 
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
@@ -24,22 +24,17 @@ jobs:
       - uses: ./.github/actions/dangerous-git-checkout
       - uses: ./.github/actions/pnpm-install
 
-      - name: Create Tags
-        run: pnpm changeset tag
-      - name: Tag debug
-        run: git tag
-      - name: Push tags
-        run: git push --follow-tags
-
       - name: Create Release Pull Request or Publish to npm
+        id: changesets
         uses: changesets/action@v1
         with:
           publish: pnpm run release
+          commit: 'chore: update versions'
+          title: 'chore: update versions'
           version: pnpm run version
         env:
           GITHUB_TOKEN: ${{ secrets.GH_ACCESS_TOKEN }}
 
-  output_test:
-    runs-on: ubuntu-latest
-    steps:
-      - run: echo ${{ release.outputs.changes }}
+      - name: Push git tag after publish
+        if: steps.changesets.outputs.published == 'true'
+        run: git push --follow-tags
