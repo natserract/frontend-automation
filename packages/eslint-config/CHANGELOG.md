@@ -1,5 +1,11 @@
 # @repo/eslint-config
 
+## 4.1.0
+
+### Minor Changes
+
+- [#21](https://github.com/natserract/frontend-automation/pull/21) [`ae9ac9d`](https://github.com/natserract/frontend-automation/commit/ae9ac9d46aaa6b79a67f42a48ccef886860c0718) Thanks [@natserract](https://github.com/natserract)! - Minor
+
 ## 4.0.0
 
 ### Major Changes
