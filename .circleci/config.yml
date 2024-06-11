@@ -53,7 +53,7 @@ jobs:
       - checkout
       - install_packages
       - run:
-          name: Tests TypeScript definitions
+          name: TypeScript types check
           command: pnpm typescript
           environment:
             NODE_OPTIONS: --max-old-space-size=3072
@@ -66,7 +66,7 @@ jobs:
       - run:
           name: Builds
           command: pnpm build
-  test_regressions:
+  test_e2e:
     <<: *default-job
     steps:
       - checkout
@@ -86,7 +86,7 @@ jobs:
             - v6-playwright-{{ arch }}-{{ checksum "/tmp/playwright_info.json" }}
       - run:
           name: Run test
-          command: pnpm test:regressions --project=chromium
+          command: pnpm test:e2e:ci
       - save_cache:
           name: Save playwright cache
           key: v6-playwright-{{ arch }}-{{ checksum "/tmp/playwright_info.json" }}
@@ -99,6 +99,14 @@ jobs:
           command: pnpm test:argos
           environment:
             ARGOS_TOKEN: $ARGOS_TOKEN
+  test_unit:
+    <<: *default-job
+    steps:
+      - checkout
+      - install_packages
+      - run:
+          name: Run unit test
+          command: pnpm test:unit
 
 workflows:
   version: 2
@@ -115,6 +123,9 @@ workflows:
       - test_builds:
           requires:
             - checkout
-      - test_regressions:
+      - test_e2e:
+          requires:
+            - checkout
+      - test_unit:
           requires:
             - checkout
