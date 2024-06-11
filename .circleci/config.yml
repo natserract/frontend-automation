@@ -86,7 +86,7 @@ jobs:
             - v6-playwright-{{ arch }}-{{ checksum "/tmp/playwright_info.json" }}
       - run:
           name: Run test
-          command: pnpm test:e2e:ci --project=chromium
+          command: pnpm test:e2e:ci
       - save_cache:
           name: Save playwright cache
           key: v6-playwright-{{ arch }}-{{ checksum "/tmp/playwright_info.json" }}
