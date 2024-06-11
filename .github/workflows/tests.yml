@@ -28,8 +28,10 @@ jobs:
       - name: Install packages
         uses: ./.github/actions/pnpm-install
 
-      - name: Run e2e tests
+      - name: Cypress intall tests
         uses: cypress-io/github-action@v6
         with:
-          install: false
-          command: pnpm test
+          runTests: false
+
+      - name: Run e2e tests
+        run: pnpm test
