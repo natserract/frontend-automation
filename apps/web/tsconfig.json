@@ -8,7 +8,7 @@
       }
     ],
     "paths": {
-      "@/tests/*": ["./tests/*"],
+      "@/test/*": ["./test/*"],
       "@/components/*": ["./components/*"]
     },
     /* Cypress */

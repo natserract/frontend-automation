@@ -31,9 +31,9 @@ const config = {
     '/node_modules/',
     '^.+\\.module\\.(css|sass|scss)$',
   ],
-  globalSetup: '<rootDir>/tests/global-setup.js',
+  globalSetup: '<rootDir>/test/global-setup.js',
   moduleNameMapper: {
-    '\\.(gif|ttf|eot|svg|png)$': '<rootDir>/tests/__mocks__/fileMock.js', // for imgs/assets
+    '\\.(gif|ttf|eot|svg|png)$': '<rootDir>/test/__mocks__/fileMock.js', // for imgs/assets
     '\\.(css|less|sass|scss)$': 'identity-obj-proxy', // for styles
     '^@/(.*)$': '<rootDir>/$1', // for Path aliases
   },

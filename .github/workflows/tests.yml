@@ -7,9 +7,6 @@ on:
       - develop
   pull_request:
 
-env:
-  CYPRESS_CACHE_FOLDER: ${{ github.workspace }}/.cypress
-
 permissions: {}
 
 jobs:
@@ -23,27 +20,10 @@ jobs:
         with:
           fetch-depth: 2
 
-      - name: Restore Cypress Binary
-        id: cypress-cache-deps
-        uses: actions/cache@v3
-        with:
-          path: .cypress
-          key: cypress-${{ runner.os }}-cypress-${{ hashFiles('pnpm-lock.yaml') }}
-
       - name: Install packages
         uses: ./.github/actions/pnpm-install
         with:
           pnpm-frozen: 'true'
 
-      - name: Branch Information
-        run: |
-          echo "Git Branch: $(git branch)"
-          echo "Git Log: $(git log --oneline)"
-          echo "HEAD SHA: $(git rev-parse HEAD)"
-          echo "HEAD^1 SHA: $(git rev-parse HEAD^1)"
-          echo "Git Diff: $(git diff HEAD^1)"
-
       - name: Run e2e test
-        run: |
-          Xvfb :99 & export DISPLAY=:99
-          pnpm test --filter ...\[HEAD^1\]
+        run: pnpm test

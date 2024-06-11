@@ -15,7 +15,8 @@
     },
     "typescript": {},
     "test": {
-      "cache": false
+      "cache": false,
+      "outputs": ["coverage/**"]
     }
   }
 }
