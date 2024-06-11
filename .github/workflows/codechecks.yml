@@ -62,7 +62,7 @@ jobs:
         run: pnpm test:e2e:ci
         env:
           ARGOS_TOKEN: ${{ secrets.ARGOS_TOKEN }}
-          UPLOAD_TO_ARGOS: false
+          UPLOAD_TO_ARGOS: 'false'
 
   unit-test:
     runs-on: ubuntu-latest

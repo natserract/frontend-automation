@@ -45,6 +45,8 @@ const DEFAULT_CHROMIUM = {
   navigationTimeout: DEFAULT_NAVIGATION_TIMEOUT,
 }
 
+console.log('Check env', process.env.UPLOAD_TO_ARGOS, process.env.CI)
+
 const config: PlaywrightTestConfig = {
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
