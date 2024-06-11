@@ -21,16 +21,23 @@ jobs:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           fetch-depth: 2
 
+      - name: Set up Cypress binary cache
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/Cypress
+          key: cypress-${{ runner.os }}-cypress-${{ hashFiles('pnpm-lock.yaml') }}
+
       - name: Install packages
         uses: ./.github/actions/pnpm-install
+        with:
+          pnpm-frozen: 'true'
 
-      - name: Cypress intall tests
+      - name: Cypress install
         id: cypress-install
         uses: cypress-io/github-action@v6
         with:
-          runTests: false
-          path: '~./cache/Cypress'
+          install: false
+          working-directory: ./packages/test/
 
-      - if: ${{ steps.cypress-install.outputs.cache-hit == 'true' }}
-        name: Run e2e tests
+      - name: Run e2e tests
         run: pnpm test
