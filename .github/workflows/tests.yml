@@ -35,6 +35,5 @@ jobs:
       - name: Run e2e tests
         uses: cypress-io/github-action@v6
         with:
-          working-directory: apps/web
           start: pnpm test
           wait-on: 'http://localhost:3000'
