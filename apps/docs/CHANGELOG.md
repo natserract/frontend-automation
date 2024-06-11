@@ -1,5 +1,16 @@
 # docs
 
+## 4.0.0
+
+### Major Changes
+
+- [#19](https://github.com/natserract/frontend-automation/pull/19) [`c185c0b`](https://github.com/natserract/frontend-automation/commit/c185c0b47077a0ba057542df5a9d7ccb5145c9ab) Thanks [@natserract](https://github.com/natserract)! - Create production release
+
+### Patch Changes
+
+- Updated dependencies [[`c185c0b`](https://github.com/natserract/frontend-automation/commit/c185c0b47077a0ba057542df5a9d7ccb5145c9ab)]:
+  - @repo/ui@4.0.0
+
 ## 3.0.0
 
 ### Major Changes
