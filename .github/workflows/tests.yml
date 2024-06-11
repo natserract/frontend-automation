@@ -32,9 +32,10 @@ jobs:
         with:
           pnpm-frozen: 'true'
 
-      - name: Cypress install
-        id: cypress-install
-        uses: cypress-io/github-action@v6
-
       - name: Run e2e tests
-        run: pnpm test
+        uses: cypress-io/github-action@v6
+        with:
+          install: false
+          working-directory: apps/web
+          start: pnpm test
+          wait-on: 'http://localhost:3000'
