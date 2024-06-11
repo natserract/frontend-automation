@@ -64,6 +64,7 @@ jobs:
         run: pnpm test:e2e:ci
         env:
           ARGOS_TOKEN: ${{ secrets.ARGOS_TOKEN }}
+          UPLOAD_TO_ARGOS: true
 
       - name: Upload Test Results
         if: ${{ always() }}
