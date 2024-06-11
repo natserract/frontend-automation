@@ -13,7 +13,7 @@
     "test": "pnpm lint && pnpm build && pnpm test:extend",
     "test:extend": "concurrently \"pnpm test:unit\" \"pnpm test:e2e\"",
     "test:argos": "node ./scripts/runArgos.mjs",
-    "test:e2e": "NEXT_PUBLIC_IS_E2E=1 turbo run test:e2e",
+    "test:e2e": "NEXT_PUBLIC_IS_E2E=1 playwright test --config=playwright.config.ts",
     "test:unit": "turbo run test:unit",
     "prepare": "husky",
     "version": "pnpm exec changeset version",

@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "typescript": "tsc -p tsconfig.json",
-    "test:e2e": "playwright test --config=../../playwright.config.ts --project=@apps/web",
+    "test:e2e": "playwright test",
     "test:unit": "jest",
     "test:unit:coverage": "jest --coverage",
     "test:unit:watch": "jest --watch"
