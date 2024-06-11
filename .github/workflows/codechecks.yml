@@ -13,31 +13,79 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  changes:
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Install packages
-        uses: ./.github/actions/pnpm-install
-
   type-check:
     runs-on: ubuntu-latest
-    needs: [changes]
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v3
-        with:
-          version: 8
+      - uses: ./.github/actions/pnpm-install
       - name: Typescript Check
         run: pnpm typescript
         env:
           NODE_OPTIONS: --max-old-space-size=4096
 
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/pnpm-install
+      - name: Prettier check
+        run: pnpm prettier --check
+
+      - name: Lint
+        if: matrix.os == 'ubuntu-latest'
+        run: pnpm lint
+
+  analyze:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/pnpm-install
+      - name: Analyze with SonarCloud
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_ACCESS_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          args: >
+            -Dsonar.projectKey=natserract_frontend-automation
+            -Dsonar.organization=natserract
+
+  e2e:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/pnpm-install
+      - uses: ./.github/actions/playwright-install
+
+      - name: Run tests
+        run: pnpm test:e2e
+
+      - name: Upload Test Results
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results-${{ matrix.shard }}_${{ strategy.job-total }}
+          path: test-results
+
+      - name: Upload screenshots to Argos CI
+        shell: bash
+        run: pnpm test:argos
+        env:
+          ARGOS_TOKEN: ${{ secrets.ARGOS_TOKEN }}
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/playwright-install
+      - run: pnpm build
+        env:
+          NODE_OPTIONS: --max_old_space_size=4096
+
   required:
     if: always()
-    needs: [changes, type-check]
+    needs: [lint, type-check, e2e, build]
     runs-on: ubuntu-latest
     steps:
       - name: fail if conditional jobs failed
