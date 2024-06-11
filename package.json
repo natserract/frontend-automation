@@ -10,7 +10,8 @@
     "prettier": "pretty-quick --ignore-path .eslintignore",
     "prettier:check": "prettier --check .",
     "prettier:fix": "prettier --write .",
-    "test:e2e": "pnpm lint && pnpm build && concurrently \"turbo run test\" \"pnpm e2e\"",
+    "test:e2e": "pnpm lint && pnpm build && pnpm test:extend",
+    "test:extend": "concurrently \"turbo run test\" \"pnpm e2e\"",
     "e2e": "NEXT_PUBLIC_IS_E2E=1 pnpm playwright test --project=@apps/web",
     "test:playwright": "playwright test --config=playwright.config.ts",
     "test:argos": "node ./scripts/runArgos.mjs",
@@ -23,6 +24,7 @@
     "push-tags": "pnpm exec changeset tag && git pull && git push --follow-tags"
   },
   "devDependencies": {
+    "@argos-ci/cli": "^2.1.0",
     "@argos-ci/core": "^2.2.0",
     "@argos-ci/playwright": "^3.0.4",
     "@changesets/changelog-github": "^0.5.0",

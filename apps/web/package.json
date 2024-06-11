@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "typescript": "tsc -p tsconfig.json",
-    "test": "concurrently \"pnpm test:e2e\"",
+    "test": "pnpm test:e2e",
     "test:e2e": "jest",
     "test:e2e:coverage": "jest --coverage",
     "test:e2e:watch": "jest --watch"

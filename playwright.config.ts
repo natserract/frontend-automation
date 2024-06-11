@@ -53,7 +53,8 @@ const config: PlaywrightTestConfig = {
   maxFailures: headless ? 10 : undefined,
   fullyParallel: true,
   reporter: [
-    [process.env.CI ? '@argos-ci/playwright/reporter' : 'list'],
+    process.env.CI ? ['dot'] : ['list'],
+    ['@argos-ci/playwright/reporter'],
     [
       'html',
       {
