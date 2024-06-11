@@ -15,7 +15,7 @@ concurrency:
 
 jobs:
   testing:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     timeout-minutes: 15
 
     steps:
@@ -30,6 +30,8 @@ jobs:
 
       - name: Cypress run
         uses: cypress-io/github-action@v6
+        with:
+          headed: true
 
       - name: E2E Test (Headless)
         run: pnpm test
