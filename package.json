@@ -16,11 +16,9 @@
     "test:e2e": "NEXT_PUBLIC_IS_E2E=1 playwright test --config=playwright.config.ts",
     "test:unit": "turbo run test:unit",
     "prepare": "husky",
+    "changeset": "changeset",
     "version": "pnpm exec changeset version",
-    "version:snapshot": "pnpm exec changeset version --snapshot",
-    "publish": "pnpm publish -r --no-git-checks --access public",
-    "publish:beta": "pnpm publish -r --tag beta --no-git-checks --access public",
-    "publish:dev": "pnpm publish -r --tag dev --no-git-checks --access public",
+    "release": "changeset publish",
     "push-tags": "pnpm exec changeset tag && git pull && git push --follow-tags"
   },
   "devDependencies": {
