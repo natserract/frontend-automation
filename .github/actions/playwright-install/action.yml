@@ -1,0 +1,21 @@
+name: 'Install playwright binaries'
+description: 'Install playwright, cache and restore if necessary'
+
+runs:
+  using: composite
+
+  steps:
+    - name: Cache playwright browser binaries
+      uses: actions/cache@v3
+      id: playwright-cache
+      with:
+        path: '~/.cache/ms-playwright'
+        key: '${{ runner.os }}-playwright-${{ env.PLAYWRIGHT_VERSION }}'
+        restore-keys: |
+          ${{ runner.os }}-playwright-
+
+    - if: ${{ steps.playwright-cache.outputs.cache-hit != 'true' }}
+      name: Install playwright browsers
+      shell: bash
+      run: pnpm playwright install --with-deps chromium
+      working-directory: ./tests

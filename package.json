@@ -10,7 +10,7 @@
     "prettier": "pretty-quick --ignore-path .eslintignore",
     "prettier:check": "prettier --check .",
     "prettier:fix": "prettier --write .",
-    "test:e2e": "pnpm lint && pnpm build && pnpm e2e",
+    "test:e2e": "pnpm lint && pnpm build && concurrently \"turbo run test\" \"pnpm e2e\"",
     "e2e": "NEXT_PUBLIC_IS_E2E=1 pnpm playwright test --project=@apps/web",
     "test:playwright": "playwright test --config=playwright.config.ts",
     "test:argos": "node ./scripts/runArgos.mjs",
