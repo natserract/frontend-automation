@@ -72,12 +72,6 @@ jobs:
           name: test-results-${{ matrix.shard }}_${{ strategy.job-total }}
           path: test-results
 
-      - name: Upload screenshots to Argos CI
-        shell: bash
-        run: pnpm test:argos
-        env:
-          ARGOS_TOKEN: ${{ secrets.ARGOS_TOKEN }}
-
   unit-test:
     runs-on: ubuntu-latest
     needs: [changes]
