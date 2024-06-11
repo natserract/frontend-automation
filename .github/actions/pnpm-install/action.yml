@@ -64,5 +64,5 @@ runs:
     - if: ${{ inputs.pnpm-frozen == 'true' }}
       name: Install dependencies
       shell: bash
-      run: pnpm install --frozen-lockfile
+      run: pnpm install --frozen-lockfile --prefer-offline
       working-directory: ${{ inputs.cwd }}
