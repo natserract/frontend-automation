@@ -1,4 +1,4 @@
-name: Release Changesets
+name: release changesets
 
 on:
   push:
@@ -24,17 +24,11 @@ jobs:
 
   release:
     needs: [build]
-    strategy:
-      max-parallel: 1
-      matrix:
-        channel:
-          - latest
-          - dev
-
+    timeout-minutes: 20
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
           ref: main # Always checkout main even for tagged releases
           fetch-depth: 0
@@ -42,33 +36,10 @@ jobs:
       - uses: ./.github/actions/dangerous-git-checkout
       - uses: ./.github/actions/pnpm-install
 
-      - name: Release to @dev channel
-        if: matrix.channel == 'dev'
-        run: |
-          pnpm version:snapshot
-          pnpm run publish:beta
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_ACCESS_TOKEN }}
-
-      - name: Publish
-        if: matrix.channel == 'latest'
-        run: |
-          pnpm run publish
-
-      - name: Push tags
-        if: matrix.channel == 'latest'
-        run: |
-          # Have to set a git config for the merge to work
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git config --global user.name "github-actions[bot]"
-          pnpm push-tags
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_ACCESS_TOKEN }}
-
-      - name: Create release pull request
+      - name: Create Release Pull Request or Publish to npm
         uses: changesets/action@v1
-        if: matrix.channel == 'latest'
         with:
+          publish: pnpm run release
           version: pnpm run version
         env:
           GITHUB_TOKEN: ${{ secrets.GH_ACCESS_TOKEN }}
