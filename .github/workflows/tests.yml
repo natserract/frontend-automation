@@ -22,19 +22,20 @@ jobs:
           fetch-depth: 2
 
       - name: Set up Cypress binary cache
+        id: cypress-cache-deps
         uses: actions/cache@v3
         with:
-          path: ~/.cache/Cypress
+          path: |
+            ~/.cache/Cypress
+            ~/node_modules
+            **/node_modules
           key: cypress-${{ runner.os }}-cypress-${{ hashFiles('pnpm-lock.yaml') }}
 
       - name: Install packages
+        if: steps.cypress-cache-deps.outputs.cache-hit != 'true'
         uses: ./.github/actions/pnpm-install
         with:
           pnpm-frozen: 'true'
 
-      - name: Run e2e tests
-        uses: cypress-io/github-action@v6
-        with:
-          working-directory: apps/web
-          start: pnpm test
-          wait-on: 'http://localhost:3000'
+      - name: Run e2e test
+        run: pnpm test
