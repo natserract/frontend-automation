@@ -54,7 +54,12 @@ const config: PlaywrightTestConfig = {
   fullyParallel: true,
   reporter: [
     process.env.CI ? ['dot'] : ['list'],
-    ['@argos-ci/playwright/reporter'],
+    [
+      '@argos-ci/playwright/reporter',
+      {
+        uploadToArgos: !!process.env.CI,
+      },
+    ],
     [
       'html',
       {

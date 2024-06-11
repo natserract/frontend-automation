@@ -21,6 +21,12 @@
     "test": {
       "cache": false,
       "outputs": ["coverage/**"]
+    },
+    "test:e2e": {
+      "cache": false
+    },
+    "test:unit": {
+      "cache": false
     }
   }
 }

@@ -8,10 +8,10 @@
     "start": "next start",
     "lint": "next lint",
     "typescript": "tsc -p tsconfig.json",
-    "test": "pnpm test:e2e",
-    "test:e2e": "jest",
-    "test:e2e:coverage": "jest --coverage",
-    "test:e2e:watch": "jest --watch"
+    "test:e2e": "playwright test --config=../../playwright.config.ts",
+    "test:unit": "jest",
+    "test:unit:coverage": "jest --coverage",
+    "test:unit:watch": "jest --watch"
   },
   "dependencies": {
     "@repo/ui": "workspace:*",

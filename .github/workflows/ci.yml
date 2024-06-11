@@ -23,10 +23,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-
-      - name: Install packages
-        uses: ./.github/actions/pnpm-install
-
+      - uses: ./.github/actions/pnpm-install
       - name: Danger
         run: pnpm danger ci
         env:
@@ -37,6 +34,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: ./.github/actions/pnpm-install
       - name: Typescript Check
         run: pnpm typescript
         env:
@@ -47,11 +45,11 @@ jobs:
     needs: [changes]
     steps:
       - uses: actions/checkout@v4
+      - uses: ./.github/actions/pnpm-install
       - name: Prettier check
         run: pnpm prettier --check
 
       - name: Lint
-        if: matrix.os == 'ubuntu-latest'
         run: pnpm lint
 
   e2e:
@@ -59,9 +57,13 @@ jobs:
     needs: [changes]
     steps:
       - uses: actions/checkout@v4
+      - uses: ./.github/actions/pnpm-install
+      - uses: ./.github/actions/playwright-install
 
-      - name: Run tests
+      - name: Run e2e test
         run: pnpm test:e2e
+        env:
+          ARGOS_TOKEN: ${{ secrets.ARGOS_TOKEN }}
 
       - name: Upload Test Results
         if: ${{ always() }}
@@ -74,20 +76,29 @@ jobs:
         shell: bash
         run: pnpm test:argos
         env:
-          ARGOS_TOKEN: ${{ inputs.argos-token }}
+          ARGOS_TOKEN: ${{ secrets.ARGOS_TOKEN }}
+
+  unit-test:
+    runs-on: ubuntu-latest
+    needs: [changes]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/pnpm-install
+      - name: Run unit test
+        run: pnpm test:unit
 
   build:
     runs-on: ubuntu-latest
     needs: [changes]
     steps:
       - uses: actions/checkout@v4
-
+      - uses: ./.github/actions/pnpm-install
       - run: pnpm build
         env:
           NODE_OPTIONS: --max_old_space_size=4096
 
   required:
-    needs: [changes, lint, type-check, e2e, build]
+    needs: [changes, lint, type-check, e2e, unit-test, build]
     if: always()
     runs-on: ubuntu-latest
     steps:

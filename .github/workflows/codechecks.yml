@@ -58,7 +58,7 @@ jobs:
       - uses: ./.github/actions/pnpm-install
       - uses: ./.github/actions/playwright-install
 
-      - name: Run tests
+      - name: Run e2e test
         run: pnpm test:e2e
         env:
           ARGOS_TOKEN: ${{ secrets.ARGOS_TOKEN }}
@@ -70,11 +70,13 @@ jobs:
           name: test-results-${{ matrix.shard }}_${{ strategy.job-total }}
           path: test-results
 
-      - name: Upload screenshots to Argos CI
-        shell: bash
-        run: pnpm test:argos
-        env:
-          ARGOS_TOKEN: ${{ secrets.ARGOS_TOKEN }}
+  unit-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/pnpm-install
+      - name: Run unit test
+        run: pnpm test:unit
 
   build:
     runs-on: ubuntu-latest
@@ -87,7 +89,7 @@ jobs:
 
   required:
     if: always()
-    needs: [lint, type-check, e2e, build]
+    needs: [lint, type-check, e2e, unit-test, build]
     runs-on: ubuntu-latest
     steps:
       - name: fail if conditional jobs failed
