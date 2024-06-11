@@ -28,6 +28,18 @@ Choose the package or packages that were affected by your work. _(Tip: you may h
 
 > Note: You do not need to select packages which depend on changes you made in other packages, the release process will do this automatically for you later on. Just choose packages you worked on directly.
 
+## E2E-Testing
+
+Be sure to set the environment variable `NEXTAUTH_URL` to the correct value. If you are running locally, as the documentation within .env.example mentions, the value should be `http://localhost:3000`.
+
+```bash
+# In a terminal just run:
+pnpm test:e2e
+
+# To open the last HTML report run:
+yarn playwright show-report test-results/reports/playwright-html-report
+```
+
 ## Knowledgements
 
 ### Gitflow workflow

@@ -32,7 +32,7 @@ runs:
 
     - name: Run test
       shell: bash
-      run: pnpm test:regressions --project=chromium
+      run: pnpm test:e2e
       env:
         ARGOS_TOKEN: ${{ inputs.argos-token }}
 
