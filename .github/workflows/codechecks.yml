@@ -28,11 +28,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/pnpm-install
+
       - name: Prettier check
         run: pnpm prettier --check
 
       - name: Lint
-        if: matrix.os == 'ubuntu-latest'
         run: pnpm lint
 
   analyze:
@@ -60,6 +60,8 @@ jobs:
 
       - name: Run tests
         run: pnpm test:e2e
+        env:
+          ARGOS_TOKEN: ${{ secrets.ARGOS_TOKEN }}
 
       - name: Upload Test Results
         if: ${{ always() }}
