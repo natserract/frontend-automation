@@ -57,5 +57,6 @@
     "*.{md,mdx,css,scss,yaml,yml}": [
       "prettier --write"
     ]
-  }
+  },
+  "version": "0.0.1"
 }
