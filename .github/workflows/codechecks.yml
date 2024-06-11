@@ -1,12 +1,6 @@
 name: code checks
 
-on:
-  push:
-    branches:
-      - main
-      - develop
-  pull_request:
-  workflow_dispatch:
+on: [push]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
@@ -60,8 +54,6 @@ jobs:
 
       - name: Run e2e test
         run: pnpm test:e2e:ci
-        env:
-          ARGOS_TOKEN: ${{ secrets.ARGOS_TOKEN }}
 
   unit-test:
     runs-on: ubuntu-latest
