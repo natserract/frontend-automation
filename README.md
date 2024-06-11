@@ -37,7 +37,7 @@ Be sure to set the environment variable `NEXTAUTH_URL` to the correct value. If 
 pnpm test:e2e
 
 # To open the last HTML report run:
-yarn playwright show-report test-results/reports/playwright-html-report
+pnpm playwright show-report test-results/reports/playwright-html-report
 ```
 
 ## Knowledgements
