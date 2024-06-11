@@ -59,7 +59,7 @@ const config: PlaywrightTestConfig = {
     [
       '@argos-ci/playwright/reporter',
       {
-        uploadToArgos: !!process.env.UPLOAD_TO_ARGOS || !!process.env.CI,
+        uploadToArgos: !!process.env.UPLOAD_TO_ARGOS,
       },
     ],
     [
