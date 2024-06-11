@@ -21,6 +21,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: ./.github/actions/dangerous-git-checkout
       - uses: ./.github/actions/pnpm-install
 
       - name: Prettier check
@@ -34,7 +35,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+      - uses: ./.github/actions/dangerous-git-checkout
       - uses: ./.github/actions/pnpm-install
+
       - name: Analyze with SonarCloud
         uses: SonarSource/sonarcloud-github-action@master
         env:
@@ -49,7 +52,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: ./.github/actions/dangerous-git-checkout
       - uses: ./.github/actions/pnpm-install
+
       - uses: ./.github/actions/playwright-install
 
       - name: Run e2e test
@@ -59,7 +64,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: ./.github/actions/dangerous-git-checkout
       - uses: ./.github/actions/pnpm-install
+
       - name: Run unit test
         run: pnpm test:unit
 
@@ -67,7 +74,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: ./.github/actions/dangerous-git-checkout
       - uses: ./.github/actions/pnpm-install
+
       - run: pnpm build
         env:
           NODE_OPTIONS: --max_old_space_size=4096

@@ -22,6 +22,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+      - uses: ./.github/actions/dangerous-git-checkout
       - uses: ./.github/actions/pnpm-install
       - name: Danger
         run: pnpm danger ci
@@ -33,6 +34,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: ./.github/actions/dangerous-git-checkout
       - uses: ./.github/actions/pnpm-install
       - name: Typescript Check
         run: pnpm typescript
@@ -44,6 +46,7 @@ jobs:
     needs: [changes]
     steps:
       - uses: actions/checkout@v4
+      - uses: ./.github/actions/dangerous-git-checkout
       - uses: ./.github/actions/pnpm-install
       - name: Prettier check
         run: pnpm prettier --check
@@ -56,6 +59,7 @@ jobs:
     needs: [changes]
     steps:
       - uses: actions/checkout@v4
+      - uses: ./.github/actions/dangerous-git-checkout
       - uses: ./.github/actions/pnpm-install
       - uses: ./.github/actions/playwright-install
 
@@ -77,6 +81,7 @@ jobs:
     needs: [changes]
     steps:
       - uses: actions/checkout@v4
+      - uses: ./.github/actions/dangerous-git-checkout
       - uses: ./.github/actions/pnpm-install
       - name: Run unit test
         run: pnpm test:unit
@@ -86,6 +91,7 @@ jobs:
     needs: [changes]
     steps:
       - uses: actions/checkout@v4
+      - uses: ./.github/actions/dangerous-git-checkout
       - uses: ./.github/actions/pnpm-install
       - run: pnpm build
         env:
