@@ -9,7 +9,10 @@ runs:
       uses: actions/cache@v3
       id: playwright-cache
       with:
-        path: '~/.cache/ms-playwright'
+        path: |
+          ~/Library/Caches/ms-playwright
+          ~/.cache/ms-playwright
+          ${{ github.workspace }}/node_modules/playwright
         key: '${{ runner.os }}-playwright-${{ env.PLAYWRIGHT_VERSION }}'
         restore-keys: |
           ${{ runner.os }}-playwright-
@@ -17,5 +20,4 @@ runs:
     - if: ${{ steps.playwright-cache.outputs.cache-hit != 'true' }}
       name: Install playwright browsers
       shell: bash
-      run: pnpm playwright install --with-deps chromium
-      working-directory: ./tests
+      run: pnpm playwright install
