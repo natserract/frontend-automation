@@ -1,5 +1,11 @@
 # @repo/ui
 
+## 4.3.0
+
+### Minor Changes
+
+- [`186e6d9`](https://github.com/natserract/frontend-automation/commit/186e6d9cbb7546ad0660eea0159cda9bbee54a9a) Thanks [@natserract](https://github.com/natserract)! - Managing applications or non-npm packages
+
 ## 4.2.0
 
 ### Minor Changes
