@@ -61,7 +61,7 @@ jobs:
       - uses: ./.github/actions/playwright-install
 
       - name: Run e2e test
-        run: pnpm test:e2e
+        run: pnpm test:e2e:ci
         env:
           ARGOS_TOKEN: ${{ secrets.ARGOS_TOKEN }}
 
