@@ -1,11 +1,29 @@
-name: publish
+name: Release Changesets
+
 on:
   push:
     branches:
       - main
 
+concurrency: ${{ github.workflow }}-${{ github.ref }}
+
+env:
+  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+  TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
+
 jobs:
   build:
+    name: Production builds
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/pnpm-install
+      - run: pnpm build
+        env:
+          NODE_OPTIONS: --max_old_space_size=4096
+
+  release:
+    needs: [build]
     strategy:
       max-parallel: 1
       matrix:
@@ -14,31 +32,15 @@ jobs:
           - dev
 
     runs-on: ubuntu-latest
-    env:
-      TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
-      TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
+          ref: main # Always checkout main even for tagged releases
           fetch-depth: 0
-
-      - name: Install packages
-        uses: ./.github/actions/pnpm-install
-
-      - run: pnpm build
-        env:
-          NODE_OPTIONS: --max_old_space_size=4096
-
-      - name: Tests TypeScript definitions
-        run: pnpm typescript
-        env:
-          NODE_OPTIONS: --max-old-space-size=4096
-
-      ##- name: Set NPMRC
-      ## run: echo "//registry.npmjs.org/:_authToken=${NPM_AUTH_TOKEN}" > .npmrc
-      ## env:
-      ## NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+          token: ${{ secrets.GH_ACCESS_TOKEN }}
+      - uses: ./.github/actions/dangerous-git-checkout
+      - uses: ./.github/actions/pnpm-install
 
       - name: Release to @dev channel
         if: matrix.channel == 'dev'
@@ -56,12 +58,12 @@ jobs:
       - name: Push tags
         if: matrix.channel == 'latest'
         run: |
-          git config user.name "GitHub Actions Bot"
-          git config user.email "<>"
+          # Have to set a git config for the merge to work
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "github-actions[bot]"
           pnpm push-tags
         env:
           GITHUB_TOKEN: ${{ secrets.GH_ACCESS_TOKEN }}
-          # NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
 
       - name: Create release pull request
         uses: changesets/action@v1
