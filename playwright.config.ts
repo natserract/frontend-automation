@@ -79,7 +79,7 @@ const config: PlaywrightTestConfig = {
     {
       name: '@apps/web',
       testDir: './apps/web/playwright',
-      testMatch: /.*\.e2e\.tsx?/,
+      testMatch: /^.*\.e2e\.(t|j)sx?$/,
       expect: {
         timeout: DEFAULT_EXPECT_TIMEOUT,
       },
