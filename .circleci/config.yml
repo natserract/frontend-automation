@@ -53,7 +53,7 @@ jobs:
       - checkout
       - install_packages
       - run:
-          name: Tests TypeScript definitions
+          name: TypeScript types check
           command: pnpm typescript
           environment:
             NODE_OPTIONS: --max-old-space-size=3072
@@ -66,7 +66,7 @@ jobs:
       - run:
           name: Builds
           command: pnpm build
-  test_regressions:
+  test_e2e:
     <<: *default-job
     steps:
       - checkout
@@ -86,7 +86,7 @@ jobs:
             - v6-playwright-{{ arch }}-{{ checksum "/tmp/playwright_info.json" }}
       - run:
           name: Run test
-          command: pnpm test:regressions --project=chromium
+          command: pnpm test:e2e:ci --project=chromium
       - save_cache:
           name: Save playwright cache
           key: v6-playwright-{{ arch }}-{{ checksum "/tmp/playwright_info.json" }}
@@ -94,11 +94,14 @@ jobs:
             # Keep path in sync with "PLAYWRIGHT_BROWSERS_PATH"
             # Can't use environment variables for `save_cache` paths (tested in https://app.circleci.com/pipelines/github/mui/material-ui/37813/workflows/5b1e207f-ac8b-44e7-9ba4-d0f9a01f5c55/jobs/223370)
             - /tmp/pw-browsers
+  test_unit:
+    <<: *default-job
+    steps:
+      - checkout
+      - install_packages
       - run:
-          name: Upload screenshots to Argos CI
-          command: pnpm test:argos
-          environment:
-            ARGOS_TOKEN: $ARGOS_TOKEN
+          name: Run e2e test
+          command: pnpm test:e2e:ci
 
 workflows:
   version: 2
@@ -115,6 +118,9 @@ workflows:
       - test_builds:
           requires:
             - checkout
-      - test_regressions:
+      - test_e2e:
+          requires:
+            - checkout
+      - test_unit:
           requires:
             - checkout
