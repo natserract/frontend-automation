@@ -1,5 +1,5 @@
 import { defineConfig, devices } from '@playwright/test'
-import type { Frame, PlaywrightTestConfig } from '@playwright/test'
+import type { PlaywrightTestConfig } from '@playwright/test'
 import * as path from 'path'
 import * as os from 'os'
 
@@ -90,4 +90,4 @@ const config: PlaywrightTestConfig = {
   ],
 }
 
-export default config
+export default defineConfig(config)
