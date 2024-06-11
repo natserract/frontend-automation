@@ -7,10 +7,6 @@ on:
       - develop
 
   pull_request:
-    types: [opened, reopened, labeled, unlabeled, synchronize]
-    branches:
-      - main
-      - develop
 
   workflow_dispatch:
 

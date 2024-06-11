@@ -6,19 +6,16 @@ on:
       - main
       - develop
   pull_request:
-    types: [opened, reopened, labeled, unlabeled, synchronize]
-    branches:
-      - main
-      - develop
 
 permissions: {}
 
+concurrency:
+  group: '${{ github.workflow }}-${{ github.head_ref || github.ref }}'
+  cancel-in-progress: true
+
 jobs:
-  build:
-    strategy:
-      matrix:
-        os: [macos-latest]
-    runs-on: ${{ matrix.os }}
+  testing:
+    runs-on: ubuntu-latest
     timeout-minutes: 15
 
     steps:
