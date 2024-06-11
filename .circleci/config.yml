@@ -100,8 +100,8 @@ jobs:
       - checkout
       - install_packages
       - run:
-          name: Run e2e test
-          command: pnpm test:e2e:ci
+          name: Run unit test
+          command: pnpm test:unit
 
 workflows:
   version: 2
