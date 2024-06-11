@@ -7,6 +7,11 @@ inputs:
     required: false
     default: 'true'
 
+  pnpm-frozen:
+    description: 'Enable pnpm --frozen-lockfile'
+    required: false
+    default: 'false'
+
 runs:
   using: composite
 
@@ -50,7 +55,14 @@ runs:
         node-version: 18
         cache: 'pnpm' # https://github.com/actions/setup-node/blob/main/docs/advanced-usage.md#caching-packages-dependencies
 
-    - name: Install dependencies
+    - if: ${{ inputs.pnpm-frozen != 'true' }}
+      name: Install dependencies
       shell: bash
       run: pnpm install
+      working-directory: ${{ inputs.cwd }}
+
+    - if: ${{ inputs.pnpm-frozen == 'true' }}
+      name: Install dependencies
+      shell: bash
+      run: pnpm install --frozen-lockfile --prefer-offline
       working-directory: ${{ inputs.cwd }}

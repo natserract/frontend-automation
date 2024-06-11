@@ -1,39 +1,90 @@
-name: code checks (sonarcloud)
+name: code checks
 
 on:
   push:
     branches:
       - main
       - develop
-
   pull_request:
-    types: [opened, reopened, labeled, unlabeled, synchronize]
-    branches:
-      - main
-      - develop
-
   workflow_dispatch:
 
-permissions: {}
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 
 jobs:
-  analysis:
+  type-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/pnpm-install
+      - name: Typescript Check
+        run: pnpm typescript
+        env:
+          NODE_OPTIONS: --max-old-space-size=4096
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/pnpm-install
+
+      - name: Prettier check
+        run: pnpm prettier --check
+
+      - name: Lint
+        run: pnpm lint
+
+  analyze:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          fetch-depth: 2
-
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/pnpm-install
       - name: Analyze with SonarCloud
         uses: SonarSource/sonarcloud-github-action@master
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_ACCESS_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-
         with:
           args: >
             -Dsonar.projectKey=natserract_frontend-automation
             -Dsonar.organization=natserract
+
+  e2e:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/pnpm-install
+      - uses: ./.github/actions/playwright-install
+
+      - name: Run e2e test
+        run: pnpm test:e2e:ci
+        env:
+          ARGOS_TOKEN: ${{ secrets.ARGOS_TOKEN }}
+
+  unit-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/pnpm-install
+      - name: Run unit test
+        run: pnpm test:unit
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/pnpm-install
+      - run: pnpm build
+        env:
+          NODE_OPTIONS: --max_old_space_size=4096
+
+  required:
+    if: always()
+    needs: [lint, type-check, e2e, unit-test, build]
+    runs-on: ubuntu-latest
+    steps:
+      - name: fail if conditional jobs failed
+        if: contains(needs.*.result, 'failure') || contains(needs.*.result, 'skipped') || contains(needs.*.result, 'cancelled')
+        run: exit 1

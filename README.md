@@ -1,6 +1,6 @@
 # CI/CD pipeline
 
-[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=natserract_frontend-automation&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=natserract_frontend-automation)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=natserract_frontend-automation&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=natserract_frontend-automation) [![Covered by Argos Visual Testing](https://argos-ci.com/badge.svg)](https://app.argos-ci.com/natserract/frontend-automation/reference)
 
 ## What's inside:
 
@@ -27,6 +27,18 @@ pnpm changeset
 Choose the package or packages that were affected by your work. _(Tip: you may have to wait a couple of seconds after selecting your packages, sometimes it doesn't get registered and it'll ask you to pick again)_
 
 > Note: You do not need to select packages which depend on changes you made in other packages, the release process will do this automatically for you later on. Just choose packages you worked on directly.
+
+## E2E-Testing
+
+Be sure to set the environment variable `NEXTAUTH_URL` to the correct value. If you are running locally, as the documentation within .env.example mentions, the value should be `http://localhost:3000`.
+
+```bash
+# In a terminal just run:
+pnpm test:e2e
+
+# To open the last HTML report run:
+yarn playwright show-report test-results/reports/playwright-html-report
+```
 
 ## Knowledgements
 

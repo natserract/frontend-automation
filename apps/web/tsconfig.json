@@ -8,16 +8,11 @@
       }
     ],
     "paths": {
-      "@/tests/*": ["./tests/*"],
+      "@/test/*": ["./test/*"],
       "@/components/*": ["./components/*"]
     },
     /* Cypress */
-    "types": [
-      "cypress",
-      "@testing-library/cypress",
-      "jest",
-      "@testing-library/jest-dom"
-    ]
+    "types": ["jest", "@testing-library/jest-dom"]
   },
   "include": [
     "next-env.d.ts",

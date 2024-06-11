@@ -1,6 +1,6 @@
 import { act } from '@testing-library/react'
 
-import { createRenderer } from '@/tests/createRenderer'
+import { createRenderer } from '@/test/createRenderer'
 import { Button } from '@/components/button'
 
 describe('<Button />', () => {
