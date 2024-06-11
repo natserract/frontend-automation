@@ -1,0 +1,25 @@
+# !/bin/bash
+set -e
+
+# Define the ANSI escape code for light blue text
+LIGHT_YELLOW='\033[1;34m'
+BLUE='\033[0;34m'
+NC='\033[0m' # No Color
+
+SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+
+# move one directory up
+cd $SCRIPT_DIR/..
+
+pwd
+
+echo "Starting..."
+
+# Loop through each subdirectory and run "yarn build"
+for dir in apps/*/ ; do
+    echo "--------"
+    echo "Building ${BLUE}$dir${NC}..."
+    echo $dir
+    echo " "
+    echo " "
+done
