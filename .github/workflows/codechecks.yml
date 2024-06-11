@@ -27,6 +27,9 @@ jobs:
     needs: [changes]
     steps:
       - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v3
+        with:
+          version: 8
       - name: Typescript Check
         run: pnpm typescript
         env:
@@ -34,6 +37,7 @@ jobs:
 
   required:
     if: always()
+    needs: [changes, type-check]
     runs-on: ubuntu-latest
     steps:
       - name: fail if conditional jobs failed
