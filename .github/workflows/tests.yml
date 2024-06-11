@@ -9,10 +9,6 @@ on:
 
 permissions: {}
 
-concurrency:
-  group: '${{ github.workflow }}-${{ github.head_ref || github.ref }}'
-  cancel-in-progress: true
-
 jobs:
   testing:
     runs-on: ubuntu-22.04
@@ -29,9 +25,12 @@ jobs:
         uses: ./.github/actions/pnpm-install
 
       - name: Cypress intall tests
+        id: cypress-install
         uses: cypress-io/github-action@v6
         with:
           runTests: false
+          path: '~./cache/Cypress'
 
-      - name: Run e2e tests
+      - if: ${{ steps.cypress-install.outputs.cache-hit == 'true' }}
+        name: Run e2e tests
         run: pnpm test
