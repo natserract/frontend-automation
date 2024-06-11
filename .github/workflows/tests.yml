@@ -15,7 +15,7 @@ concurrency:
 
 jobs:
   testing:
-    runs-on: ubuntu-22.04
+    runs-on: macos-latest
     timeout-minutes: 15
 
     steps:
@@ -27,11 +27,6 @@ jobs:
 
       - name: Install packages
         uses: ./.github/actions/pnpm-install
-
-      - name: Cypress run
-        uses: cypress-io/github-action@v6
-        with:
-          headed: true
 
       - name: E2E Test (Headless)
         run: pnpm test
